@@ -70,10 +70,10 @@ body {
 
 .logo-text {
   font-family: 'Abril Fatface', cursive;
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 700;
   color: white;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   line-height: 1.1;
 }
 
@@ -117,7 +117,7 @@ body {
 }
 
 .hero p {
-  font-size: 24px;
+  font-size: 16px;
   color: var(--white-80);
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -593,23 +593,20 @@ input[type="text"]:focus { border-color: white; }
 
 <!-- SCREEN: WELCOME -->
 <div class="screen" id="screen-welcome">
-  <div class="hero" style="padding-bottom: 16px;">
+  <div class="hero">
     <h1>Matched</h1>
     <p>Family. Friends. Cricket.</p>
   </div>
-
   <div class="card">
     <button class="btn btn-primary" style="margin-bottom:12px" onclick="showCreateClubhouse()">Create a Clubhouse</button>
-    <p style="font-size:12px;color:var(--white-60);text-align:center;margin-bottom:12px">Start your own private space for your people</p>
-    <div style="height:1px;background:var(--white-20);margin:8px 0 16px"></div>
+    <p style="font-size:12px;color:var(--white-60);text-align:center;margin-bottom:16px">Start your own private space for your people</p>
+    <div style="height:1px;background:var(--white-20);margin-bottom:16px"></div>
     <button class="btn btn-secondary" onclick="showJoinClubhouse()">Join a Clubhouse</button>
     <p style="font-size:12px;color:var(--white-60);text-align:center;margin-top:12px">Enter a code to join someone's clubhouse</p>
   </div>
-
   <div style="text-align:center;padding:0 24px 24px">
     <p style="font-size:12px;color:var(--white-60);line-height:1.8;letter-spacing:0.5px">Pick 11 players · Beat your people<br>No money. No registration. Ever.</p>
   </div>
-
   <div class="footer">Created by Abhishek Sarkar · abhishek.stat.iitk@gmail.com</div>
 </div>
 
@@ -667,7 +664,7 @@ input[type="text"]:focus { border-color: white; }
 <div class="screen" id="screen-squad">
   <div style="padding:24px 16px 0">
     <div class="section-title">Build Your Squad</div>
-    <div class="section-sub">Pick any 11 players from IPL 2025</div>
+    <div class="section-sub">Pick any 11 players from IPL 2026</div>
   </div>
   <div style="padding:0 16px">
     <div class="squad-counter">
@@ -731,7 +728,7 @@ input[type="text"]:focus { border-color: white; }
     </button>
   </div>
 
-  <div class="footer">Created by Abhishek Sarkar · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dabbb8b2b3a9b2bfb1f4a9aebbaef4b3b3aeb19abdb7bbb3b6f4b9b5b7">[email&#160;protected]</a></div>
+  <div class="footer">Created by Abhishek Sarkar · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0b1b2b8b9a3b8b5bbfea3a4b1a4feb9b9a4bb90b7bdb1b9bcfeb3bfbd">[email&#160;protected]</a></div>
 </div>
 
 <!-- PIN Modal -->
@@ -956,13 +953,21 @@ window.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('mainNav').style.display = 'flex';
       loadDashboard();
     } else {
-      // Directly show welcome screen
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById('screen-welcome').classList.add('active');
-      window.scrollTo(0,0);
     }
   }, 2800);
 });
+
+// ─── SCREENS ───
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  const nav = document.getElementById('mainNav');
+  nav.style.display = (id === 'screen-welcome') ? 'none' : 'flex';
+}
+window.showScreen = showScreen;
 
 // ─── CLUBHOUSE ENTRY ───
 window.showCreateClubhouse = function() {
@@ -976,21 +981,6 @@ window.showJoinClubhouse = function() {
   document.getElementById('card-create').style.display = 'none';
   document.getElementById('card-join').style.display = 'block';
 };
-
-// ─── SCREENS ───
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-  // Show nav on all screens except welcome
-  const nav = document.getElementById('mainNav');
-  if (id === 'screen-welcome') {
-    nav.style.display = 'none';
-  } else {
-    nav.style.display = 'flex';
-  }
-}
-window.showScreen = showScreen;
 
 // ─── CIRCLE ───
 window.createCircle = function() {
@@ -1207,19 +1197,7 @@ function renderLeaderboard(members) {
         <div class="lb-name">${e.name}${e.uid === state.userId ? ' (You)' : ''}</div>
         <div class="lb-team">${e.team}</div>
       </div>
-      <div class="lb-score">${e.score.toFixed(1)}</div>
-    </div>
-  `).join('');
-}
-
-function renderMySquad() {
-  const grid = document.getElementById('mySquadGrid');
-  grid.innerHTML = state.selectedPlayers.map(pid => {
-    const player = PLAYERS.find(p => p.id === pid);
-    const score = calculateScore(pid);
-    return `
-      <div class="squad-card">
-        <div class="squad-card-name">${player ? player.name : pid}</div>
+      <div clard-name">${player ? player.name : pid}</div>
         <div class="squad-card-team">${player ? player.team : ''}</div>
         <div class="squad-card-pts">${score.toFixed(1)}</div>
       </div>
@@ -1229,7 +1207,7 @@ function renderMySquad() {
 
 // ─── SHARE ───
 window.shareCircle = function() {
-  const text = `Join my Matched circle!\n\nCircle: ${state.circleName}\nCode: ${state.circleCode}\n\nPlay IPL 2026 with your people\nhttps://playmatched.github.io\n\nNo money. No registration.`;
+  const text = `Join my Cricket Squad circle!\n\nCircle: ${state.circleName}\nCode: ${state.circleCode}\n\nOpen: https://playmatched.github.io\n\nFamily. Friends. Cricket. 🏏`;
   if (navigator.share) {
     navigator.share({ title: 'Matched', text });
   } else {
@@ -1395,4 +1373,20 @@ function showToast(msg) {
 window.showToast = showToast;
 
 // ─── INIT SCREENS ───
-document.getElementB
+document.getElementById('screen-profile') && (() => {
+  buildTeamGrid();
+})();
+
+// Build team grid when profile screen becomes visible
+const origShowScreen = window.showScreen;
+window.showScreen = function(id) {
+  origShowScreen(id);
+  if (id === 'screen-profile') buildTeamGrid();
+  if (id === 'screen-squad') {
+    buildFilterTabs();
+    filterPlayers();
+  }
+};
+</script>
+</body>
+</html>
