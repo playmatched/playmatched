@@ -533,8 +533,8 @@ input[type="text"]:focus { border-color: white; }
 
 .loader.hidden { opacity: 0; pointer-events: none; }
 
-.loader-text { font-family: 'Abril Fatface', cursive; font-size: 48px; font-weight: 700; color: white; }
-.loader-sub { font-size: 12px; color: var(--white-60); letter-spacing: 4px; margin-top: 8px; text-transform: uppercase; }
+.loader-text { font-family: 'Abril Fatface', cursive; font-size: 64px; font-weight: 700; color: white; text-shadow: 0 4px 24px rgba(0,0,0,0.2); }
+.loader-sub { font-size: 13px; color: var(--white-80); letter-spacing: 5px; margin-top: 12px; text-transform: uppercase; }
 
 /* PIN modal */
 .pin-dots { display: flex; gap: 12px; justify-content: center; margin: 20px 0; }
@@ -592,61 +592,52 @@ input[type="text"]:focus { border-color: white; }
 </nav>
 
 <!-- SCREEN: WELCOME -->
-<div class="screen active" id="screen-welcome">
-  <div class="hero">
+<div class="screen" id="screen-welcome">
+  <div class="hero" style="padding-bottom: 16px;">
     <h1>Matched</h1>
     <p>Family. Friends. Cricket.</p>
-    <button class="btn btn-primary" onclick="showScreen('screen-create-join')">Let's Play 🏏</button>
   </div>
-  <div class="card" style="margin-top:0">
-    <div style="display:flex;gap:16px;margin-bottom:16px">
-      <div style="flex:1;text-align:center">
-        <div style="font-size:28px;font-family:'Abril Fatface',cursive;font-weight:700">11</div>
-        <div style="font-size:11px;color:var(--white-60);letter-spacing:1px;margin-top:4px">PLAYERS</div>
-      </div>
-      <div style="width:1px;background:var(--white-20)"></div>
-      <div style="flex:1;text-align:center">
-        <div style="font-size:28px;font-family:'Abril Fatface',cursive;font-weight:700">0</div>
-        <div style="font-size:11px;color:var(--white-60);letter-spacing:1px;margin-top:4px">MONEY</div>
-      </div>
-      <div style="width:1px;background:var(--white-20)"></div>
-      <div style="flex:1;text-align:center">
-        <div style="font-size:28px;font-family:'Abril Fatface',cursive;font-weight:700">∞</div>
-        <div style="font-size:11px;color:var(--white-60);letter-spacing:1px;margin-top:4px">FUN</div>
-      </div>
-    </div>
-    <p style="font-size:13px;color:var(--white-60);text-align:center;line-height:1.6">Pick your IPL squad. Create your circle with friends, family or colleagues. No registration. Just cricket.</p>
+
+  <div class="card">
+    <button class="btn btn-primary" style="margin-bottom:12px" onclick="showCreateClubhouse()">Create a Clubhouse</button>
+    <p style="font-size:12px;color:var(--white-60);text-align:center;margin-bottom:12px">Start your own private space for your people</p>
+    <div style="height:1px;background:var(--white-20);margin:8px 0 16px"></div>
+    <button class="btn btn-secondary" onclick="showJoinClubhouse()">Join a Clubhouse</button>
+    <p style="font-size:12px;color:var(--white-60);text-align:center;margin-top:12px">Enter a code to join someone's clubhouse</p>
   </div>
-  <div class="footer">Created by Abhishek Sarkar · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cedeee4e5ffe4e9e7a2fff8edf8a2e5e5f8e7ccebe1ede5e0a2efe3e1">[email&#160;protected]</a></div>
+
+  <div style="text-align:center;padding:0 24px 24px">
+    <p style="font-size:12px;color:var(--white-60);line-height:1.8;letter-spacing:0.5px">Pick 11 players · Beat your people<br>No money. No registration. Ever.</p>
+  </div>
+
+  <div class="footer">Created by Abhishek Sarkar · abhishek.stat.iitk@gmail.com</div>
 </div>
 
 <!-- SCREEN: CREATE OR JOIN -->
 <div class="screen" id="screen-create-join">
   <div style="padding:32px 16px 0">
-    <div class="section-title">Play with your people</div>
-    <div class="section-sub">Create a new circle or join one that's already running</div>
+    <div class="section-title">Your Clubhouse</div>
+    <div class="section-sub">A private space for you and your people</div>
   </div>
 
-  <div class="card">
-    <div style="font-size:16px;font-weight:600;margin-bottom:6px">🏏 Create a Circle</div>
-    <div style="font-size:13px;color:var(--white-60);margin-bottom:20px">Start a private league for your friends, family or office</div>
+  <div class="card" id="card-create" style="display:none">
+    <div style="font-size:16px;font-weight:600;margin-bottom:6px">Create a Clubhouse</div>
+    <div style="font-size:13px;color:var(--white-60);margin-bottom:20px">Start your own private space for friends, family or colleagues</div>
     <div class="input-group">
-      <label class="input-label">Circle Name</label>
-      <input type="text" id="circleNameInput" placeholder="e.g. Sarkar Family League" maxlength="30">
+      <label class="input-label">Clubhouse Name</label>
+      <input type="text" id="circleNameInput" placeholder="e.g. Sarkar Family Clubhouse" maxlength="30">
     </div>
-    <button class="btn btn-primary" onclick="createCircle()">Create Circle →</button>
+    <button class="btn btn-primary" onclick="createCircle()">Create Clubhouse →</button>
   </div>
 
-  <div class="divider">or</div>
-
-  <div class="card">
-    <div style="font-size:16px;font-weight:600;margin-bottom:6px">🤝 Join a Circle</div>
+  <div class="card" id="card-join" style="display:none">
+    <div style="font-size:16px;font-weight:600;margin-bottom:6px">Join a Clubhouse</div>
     <div style="font-size:13px;color:var(--white-60);margin-bottom:20px">Enter the code shared by your friend</div>
     <div class="input-group">
-      <label class="input-label">Circle Code</label>
+      <label class="input-label">Clubhouse Code</label>
       <input type="text" id="joinCodeInput" placeholder="e.g. SARK24" maxlength="8" style="text-transform:uppercase">
     </div>
-    <button class="btn btn-secondary" onclick="joinCircle()">Join Circle →</button>
+    <button class="btn btn-secondary" onclick="joinCircle()">Join Clubhouse →</button>
   </div>
 </div>
 
@@ -947,9 +938,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   setTimeout(() => {
     document.getElementById('loader').classList.add('hidden');
-    document.getElementById('mainNav').style.display = 'flex';
 
-    // Check if user already has a circle and squad
+    // Check if user already has a clubhouse and squad
     const savedCircle = localStorage.getItem('tcs_circle');
     const savedName = localStorage.getItem('tcs_name');
     const savedTeam = localStorage.getItem('tcs_team');
@@ -963,23 +953,46 @@ window.addEventListener('DOMContentLoaded', async () => {
       state.squadConfirmed = true;
       const savedCircleName = localStorage.getItem('tcs_circlename') || savedCircle;
       state.circleName = savedCircleName;
+      document.getElementById('mainNav').style.display = 'flex';
       loadDashboard();
+    } else {
+      showScreen('screen-welcome');
     }
-  }, 1800);
+  }, 2800);
 });
+
+// ─── CLUBHOUSE ENTRY ───
+window.showCreateClubhouse = function() {
+  showScreen('screen-create-join');
+  document.getElementById('card-create').style.display = 'block';
+  document.getElementById('card-join').style.display = 'none';
+};
+
+window.showJoinClubhouse = function() {
+  showScreen('screen-create-join');
+  document.getElementById('card-create').style.display = 'none';
+  document.getElementById('card-join').style.display = 'block';
+};
 
 // ─── SCREENS ───
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  // Show nav on all screens except welcome
+  const nav = document.getElementById('mainNav');
+  if (id === 'screen-welcome') {
+    nav.style.display = 'none';
+  } else {
+    nav.style.display = 'flex';
+  }
 }
 window.showScreen = showScreen;
 
 // ─── CIRCLE ───
 window.createCircle = function() {
   const name = document.getElementById('circleNameInput').value.trim();
-  if (!name) { showToast('Please enter a circle name'); return; }
+  if (!name) { showToast('Please enter a clubhouse name'); return; }
   const code = name.replace(/[^a-zA-Z0-9]/g,'').substring(0,6).toUpperCase() + Math.floor(Math.random()*99);
   state.circleCode = code;
   state.circleName = name;
@@ -1005,7 +1018,7 @@ window.joinCircle = function() {
         localStorage.setItem('tcs_circlename', state.circleName);
         showScreen('screen-profile');
       } else {
-        showToast('Circle not found. Check the code!');
+        showToast('Clubhouse not found. Check the code!');
       }
     });
   } else {
