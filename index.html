@@ -355,7 +355,7 @@ const app = initializeApp({
   projectId:"dodogame",
   storageBucket:"dodogame.appspot.com",
   messagingSenderId:"406976108",
-  appId:"1:406976108:web:abc123"
+  appId:"1:50592650535:web:2e7f912909a2d5ca7d8502"
 });
 const db = getDatabase(app);
 window._db = {db, ref, set, get, onValue, update};
@@ -728,7 +728,7 @@ function updateDots() {
 
 function checkPin() {
   const {db,ref,get} = window._db;
-  get(ref(db,'matched/adminPin')).then(snap => {
+  get(ref(db,'adminPin')).then(snap => {
     const correct = snap.exists() ? String(snap.val()) : '123456';
     if (S.pin===correct) {
       closeModal('modal-pin');
