@@ -371,8 +371,9 @@ select option { background:white; color:var(--text); }
           <option value="LSG">Lucknow Super Giants</option>
         </select>
         <div id="swapPlList"></div>
-        <button class="btn btn-secondary" style="margin-top:8px" onclick="cancelSwap()">Cancel</button>
+        <button class="btn btn-secondary" style="margin-top:8px;margin-bottom:16px" onclick="cancelSwap()">Cancel</button>
       </div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:10px" id="squadLockLabel"></div>
       <div class="sq-grid" id="sqGrid"></div>
       <button class="btn btn-secondary" style="margin-top:16px" onclick="shareLeaderboard()">Share Leaderboard</button>
     </div>
@@ -1020,7 +1021,16 @@ function renderSquadPanel() {
 
 window.editSquad = function() {
   S.editingSquad = true;
-  renderSquadPanel();
+  S.swapPendingOut = null;
+  // Show squad grid with tappable cards — same UI as swap but no counter
+  document.getElementById('selectorPanel').style.display = 'none';
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  document.getElementById('swapBanner').innerHTML = `<div class="swap-banner open" style="background:var(--accent-light);border-color:rgba(45,106,45,0.2)">
+    <div><div class="swap-banner-text" style="color:var(--accent)">Editing Squad</div><div class="swap-banner-sub">Tap a player to replace them. No limit before March 28.</div></div>
+    <button class="btn btn-secondary" style="width:auto;padding:8px 14px;font-size:12px;white-space:nowrap" onclick="cancelEdit()">Done</button>
+  </div>`;
+  document.getElementById('squadPanel').style.display = 'block';
+  showSquad(false, true); // allowSwap=false, editMode=true
 };
 
 function renderSwapBanner(club, swapOpen, swapsLeft) {
@@ -1153,37 +1163,74 @@ window.saveSquad = function() {
 };
 
 // ─── SHOW SQUAD GRID ───
-function showSquad(allowSwap = true) {
+function showSquad(allowSwap = true, editMode = false) {
   const club = getActiveClub();
   if (!club) return;
   if (document.getElementById('squadPanel').style.display === 'none') return;
   const swapOpen = isSwapOpen();
   const swapsLeft = getSwapsLeft(club);
   const canSwap = allowSwap && swapOpen && swapsLeft > 0 && !S.swapPendingOut;
+  const canEdit = editMode && !S.swapPendingOut;
   document.getElementById('sqGrid').innerHTML = club.squad.map(pid => {
     const p = PLAYERS.find(x => x.id===pid);
     const pts = (S.playerPoints[pid] || 0).toFixed(1);
     const isOut = S.swapPendingOut === pid;
-    return `<div class="sq-card ${canSwap?'swappable':''} ${isOut?'being-removed':''}"
-      onclick="${canSwap ? `startSwap('${pid}')` : ''}">
+    const tappable = canSwap || canEdit;
+    const hint = canEdit ? 'TAP TO REPLACE' : canSwap ? 'TAP TO SWAP' : '';
+    const clickFn = canEdit ? `startEdit('${pid}')` : canSwap ? `startSwap('${pid}')` : '';
+    return `<div class="sq-card ${tappable?'swappable':''} ${isOut?'being-removed':''}"
+      onclick="${clickFn}">
       <div class="sq-card-name">${p?p.name:pid}</div>
       <div class="sq-card-team">${p?p.team:''}</div>
       <div class="sq-card-pts">${pts}</div>
-      ${canSwap ? `<div class="sq-card-swap-hint">TAP TO SWAP</div>` : ''}
+      ${tappable ? `<div class="sq-card-swap-hint">${hint}</div>` : ''}
     </div>`;
   }).join('');
 }
 
-// ─── SWAP FLOW ───
+// ─── EDIT FLOW (pre-lock, no swap cost) ───
+window.startEdit = function(pid) {
+  S.swapPendingOut = pid;
+  const p = PLAYERS.find(x => x.id===pid);
+  document.getElementById('swapSelectorWrap').style.display = 'block';
+  document.getElementById('sqGrid').style.display = 'none';
+  document.getElementById('swapTeamDrop').value = '';
+  document.getElementById('swapPlList').innerHTML = '';
+  window.scrollTo(0,0);
+  toast(`Replacing ${p ? p.name : pid}. Pick new player below.`);
+};
+
+window.confirmEdit = function(newPid) {
+  const club = getActiveClub();
+  if (!club || !S.swapPendingOut) return;
+  const outPid = S.swapPendingOut;
+  const outPlayer = PLAYERS.find(x => x.id===outPid);
+  const inPlayer  = PLAYERS.find(x => x.id===newPid);
+  const idx = club.squad.indexOf(outPid);
+  if (idx < 0) return;
+  club.squad[idx] = newPid;
+  // In edit mode, rebuild allPlayers from current squad only (pre-lock, no history needed)
+  club.allPlayers = [...club.squad];
+  saveClubs();
+  const {db,ref,update} = window._db;
+  update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {
+    squad: club.squad, allPlayers: club.allPlayers, swapsUsed: club.swapsUsed || 0
+  });
+  S.swapPendingOut = null;
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  document.getElementById('sqGrid').style.display = 'grid';
+  window.editSquad(); // stay in edit mode
+  toast(`✓ ${outPlayer?outPlayer.name:outPid} → ${inPlayer?inPlayer.name:newPid}`);
+};
 window.startSwap = function(pid) {
   const club = getActiveClub();
   if (!club || !isSwapOpen() || getSwapsLeft(club) <= 0) return;
   S.swapPendingOut = pid;
   const p = PLAYERS.find(x => x.id===pid);
   document.getElementById('swapSelectorWrap').style.display = 'block';
+  document.getElementById('sqGrid').style.display = 'none';
   document.getElementById('swapTeamDrop').value = '';
   document.getElementById('swapPlList').innerHTML = '';
-  showSquad(); // re-render to show selected card
   window.scrollTo(0, 0);
   toast(`Swapping out ${p ? p.name : pid}. Pick replacement below.`);
 };
@@ -1193,10 +1240,10 @@ window.loadSwapTeam = function() {
   if (!club || !S.swapPendingOut) return;
   const team = document.getElementById('swapTeamDrop').value;
   if (!team) { document.getElementById('swapPlList').innerHTML=''; return; }
-  // Show all players from that team EXCEPT those already in squad
+  const confirmFn = S.editingSquad ? 'confirmEdit' : 'confirmSwap';
   document.getElementById('swapPlList').innerHTML = PLAYERS
     .filter(p => p.team === team && !club.squad.includes(p.id))
-    .map(p => `<div class="pl-row" onclick="confirmSwap('${p.id}')">
+    .map(p => `<div class="pl-row" onclick="${confirmFn}('${p.id}')">
       <div><div class="pl-name">${p.name}</div><div class="pl-meta">${p.team} · ${p.role}</div></div>
       <div class="pl-check">+</div>
     </div>`).join('');
@@ -1228,6 +1275,7 @@ window.confirmSwap = function(newPid) {
 
   S.swapPendingOut = null;
   document.getElementById('swapSelectorWrap').style.display = 'none';
+  document.getElementById('sqGrid').style.display = 'grid';
   renderSwapBanner(club, isSwapOpen(), getSwapsLeft(club));
   showSquad();
   updateScore();
@@ -1235,10 +1283,18 @@ window.confirmSwap = function(newPid) {
   toast(`✓ ${outPlayer?outPlayer.name:outPid} → ${inPlayer?inPlayer.name:newPid}. ${getSwapsLeft(club)} swap${getSwapsLeft(club)!==1?'s':''} left.`);
 };
 
+window.cancelEdit = function() {
+  S.editingSquad = false;
+  S.swapPendingOut = null;
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  renderSquadPanel();
+};
+
 window.cancelSwap = function() {
   S.swapPendingOut = null;
   document.getElementById('swapSelectorWrap').style.display = 'none';
-  showSquad();
+  document.getElementById('sqGrid').style.display = 'grid';
+  if (S.editingSquad) { window.editSquad(); } else { showSquad(); }
 };
 
 window.switchTab = function(tab) {
