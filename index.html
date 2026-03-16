@@ -766,9 +766,14 @@ function getSwapsLeft(club) { return MAX_SWAPS - getSwapsUsed(club); }
 
 // ─── SCORE — includes ALL players ever in squad (past + present) ───
 // club.allPlayers = union of all players ever picked (including swapped-out ones)
+// club.baselines = { pid: pointsAtTimeOfJoining } — subtracted so new players start from 0
 function calcScore(club) {
   const allIds = club.allPlayers || club.squad || [];
-  return allIds.reduce((tot, pid) => tot + (S.playerPoints[pid] || 0), 0);
+  const baselines = club.baselines || {};
+  return allIds.reduce((tot, pid) => {
+    const pts = (S.playerPoints[pid] || 0) - (baselines[pid] || 0);
+    return tot + Math.max(0, pts);
+  }, 0);
 }
 
 // ─── INIT ───
@@ -950,7 +955,8 @@ window.recoverAccount = function() {
             code, name: club.name,
             squad: member.squad || [],
             allPlayers: member.allPlayers || member.squad || [],
-            swapsUsed: member.swapsUsed || 0
+            swapsUsed: member.swapsUsed || 0,
+            baselines: member.baselines || {}
           });
         }
       });
@@ -1071,11 +1077,7 @@ function loadPlayerPoints() {
           if (!membSnap.exists()) return;
           const members = membSnap.val();
           const entries = Object.entries(members)
-            .map(([uid,m]) => ({uid, name:m.name, score: calcScore({squad:m.squad||[], allPlayers:m.allPlayers||m.squad||[]})}))
-            .sort((a,b) => b.score - a.score);
-          const myIdx = entries.findIndex(e => e.uid === S.uid);
-          document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+(myIdx+1) : '#—';
-          document.getElementById('topScore').textContent = entries[0] ? entries[0].score.toFixed(1) : '0';
+            .map(([uid,m]) => ({uid, name:m.name, score: calcScore({squad:m.squad||[], allPlayers:m.allPlayers||m.squad||[], baselines:m.baselines||{}})}))
           lbList.innerHTML = entries.map((e,i) => `
             <div class="lb-row ${e.uid===S.uid?'you':''}">
               <div class="lb-rank">${i===0?'🏆':i===1?'🥈':i===2?'🥉':i+1}</div>
@@ -1103,12 +1105,7 @@ function loadLb() {
   onValue(ref(db,`kicket/clubs/${club.code}/members`), snap => {
     const members = snap.exists() ? snap.val() : {};
     const entries = Object.entries(members)
-      .map(([uid,m]) => ({uid, name:m.name, score: calcScore({squad:m.squad||[], allPlayers:m.allPlayers||m.squad||[]})}))
-      .sort((a,b) => b.score - a.score);
-    const myIdx = entries.findIndex(e => e.uid === S.uid);
-    document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+(myIdx+1) : '#—';
-    document.getElementById('topScore').textContent = entries[0] ? entries[0].score.toFixed(1) : '0';
-    updateScore();
+      .map(([uid,m]) => ({uid, name:m.name, score: calcScore({squad:m.squad||[], allPlayers:m.allPlayers||m.squad||[], baselines:m.baselines||{}})}))
     document.getElementById('lbList').innerHTML = entries.map((e,i) => `
       <div class="lb-row ${e.uid===S.uid?'you':''}">
         <div class="lb-rank">${i===0?'🏆':i===1?'🥈':i===2?'🥉':i+1}</div>
@@ -1171,9 +1168,11 @@ function showSquad(allowSwap = true, editMode = false) {
   const swapsLeft = getSwapsLeft(club);
   const canSwap = allowSwap && swapOpen && swapsLeft > 0 && !S.swapPendingOut;
   const canEdit = editMode && !S.swapPendingOut;
+  const baselines = club.baselines || {};
   document.getElementById('sqGrid').innerHTML = club.squad.map(pid => {
     const p = PLAYERS.find(x => x.id===pid);
-    const pts = (S.playerPoints[pid] || 0).toFixed(1);
+    const rawPts = S.playerPoints[pid] || 0;
+    const pts = Math.max(0, rawPts - (baselines[pid] || 0)).toFixed(1);
     const isOut = S.swapPendingOut === pid;
     const tappable = canSwap || canEdit;
     const hint = canEdit ? 'TAP TO REPLACE' : canSwap ? 'TAP TO SWAP' : '';
@@ -1211,10 +1210,13 @@ window.confirmEdit = function(newPid) {
   club.squad[idx] = newPid;
   // Keep outPid in allPlayers so past points are preserved
   club.allPlayers = [...new Set([...(club.allPlayers||[]), ...club.squad, outPid])];
+  // Snapshot new player's current points as baseline — they start earning from now
+  club.baselines = club.baselines || {};
+  club.baselines[newPid] = S.playerPoints[newPid] || 0;
   saveClubs();
   const {db,ref,update} = window._db;
   update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {
-    squad: club.squad, allPlayers: club.allPlayers, swapsUsed: club.swapsUsed || 0
+    squad: club.squad, allPlayers: club.allPlayers, swapsUsed: club.swapsUsed || 0, baselines: club.baselines
   });
   S.swapPendingOut = null;
   document.getElementById('swapSelectorWrap').style.display = 'none';
@@ -1265,12 +1267,17 @@ window.confirmSwap = function(newPid) {
   club.allPlayers = [...new Set([...(club.allPlayers||[]), ...club.squad, outPid])];
   club.swapsUsed = (club.swapsUsed || 0) + 1;
 
+  // Snapshot new player's current points as baseline — they start earning from now
+  club.baselines = club.baselines || {};
+  club.baselines[newPid] = S.playerPoints[newPid] || 0;
+
   saveClubs();
   const {db,ref,update} = window._db;
   update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {
     squad: club.squad,
     allPlayers: club.allPlayers,
-    swapsUsed: club.swapsUsed
+    swapsUsed: club.swapsUsed,
+    baselines: club.baselines
   });
 
   S.swapPendingOut = null;
