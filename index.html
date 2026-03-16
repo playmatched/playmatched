@@ -9,140 +9,477 @@
 <meta property="og:url" content="https://playkicket.github.io/">
 <meta property="og:title" content="Kicket — Family. Friends. Cricket.">
 <meta property="og:description" content="Play IPL 2026 with your people. No money. No registration.">
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gl: #8dc63f;
-  --gd: #5a9e2f;
-  --gp: #3d7a1e;
-  --w: #ffffff;
-  --w80: rgba(255,255,255,0.8);
-  --w60: rgba(255,255,255,0.6);
-  --w20: rgba(255,255,255,0.2);
-  --w10: rgba(255,255,255,0.1);
-  --r: 16px;
+  --bg: #F5F5F5;
+  --bg2: #EBEBEB;
+  --surface: #FFFFFF;
+  --border: #E0E0E0;
+  --border2: #CACACA;
+  --text: #1A1A1A;
+  --text2: #555555;
+  --text3: #999999;
+  --accent: #2D6A2D;
+  --accent-light: #E8F2E8;
+  --accent-mid: #4a8f4a;
+  --danger: #C0392B;
+  --danger-light: #FDECEA;
+  --r: 14px;
+  --r-sm: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.10), 0 8px 24px rgba(0,0,0,0.08);
 }
+
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
 body {
-  font-family:'DM Sans',sans-serif;
-  min-height:100vh;
-  background-color:var(--gd);
-  background-image:repeating-linear-gradient(90deg,var(--gl) 0px,var(--gl) 32px,var(--gd) 32px,var(--gd) 64px);
-  color:var(--w);
-  overflow-x:hidden;
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
 }
+
+/* ── NAV ── */
 .nav {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 20px;
-  background:rgba(0,0,0,0.25); backdrop-filter:blur(8px);
-  position:sticky; top:0; z-index:100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
 }
-.logo { cursor:pointer; }
-.logo-text { font-family:'Abril Fatface',cursive; font-size:22px; color:white; letter-spacing:1px; display:block; line-height:1.1; }
-.logo-sub { font-size:9px; color:var(--w60); letter-spacing:2px; display:block; }
-.screen { display:none; min-height:100vh; }
-.screen.active { display:block; }
-.hero { text-align:center; padding:64px 24px 40px; }
-.hero h1 { font-family:'Abril Fatface',cursive; font-size:72px; line-height:1; margin-bottom:12px; text-shadow:0 4px 24px rgba(0,0,0,0.2); }
-.hero p { font-size:16px; color:var(--w80); letter-spacing:4px; text-transform:uppercase; margin-bottom:48px; }
-.card { background:rgba(0,0,0,0.3); backdrop-filter:blur(10px); border:1px solid var(--w20); border-radius:var(--r); padding:28px 24px; margin:0 16px 20px; }
-.btn { width:100%; padding:16px; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; cursor:pointer; transition:all 0.2s; display:block; }
-.btn-primary { background:white; color:var(--gp); }
-.btn-primary:hover { opacity:0.9; transform:translateY(-1px); }
-.btn-secondary { background:var(--w10); color:white; border:1px solid var(--w20); }
-.btn-secondary:hover { background:var(--w20); }
-.btn-ghost { background:none; color:var(--w60); border:none; font-size:13px; padding:10px; width:100%; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:underline; text-underline-offset:3px; }
-.btn-ghost:hover { color:white; }
-.btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
-.lbl { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--w60); margin-bottom:8px; display:block; }
+.logo { cursor: pointer; user-select: none; }
+.logo-text { font-family: 'Abril Fatface', cursive; font-size: 22px; color: var(--accent); letter-spacing: 0.5px; display: block; line-height: 1.1; }
+.logo-sub { font-size: 9px; color: var(--text3); letter-spacing: 2.5px; text-transform: uppercase; display: block; }
+.nav-back {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.nav-back:hover { background: var(--border); }
+
+/* ── SCREENS ── */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 56px 24px 32px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 80px;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 10px;
+  letter-spacing: -1px;
+}
+.hero p {
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin: 0 16px 16px;
+  box-shadow: var(--shadow);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  width: 100%; padding: 15px 16px;
+  border: none; border-radius: var(--r-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.18s;
+  display: block; text-align: center;
+}
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+.btn-primary:hover { background: var(--accent-mid); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(45,106,45,0.25); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+.btn-secondary:hover { background: var(--bg2); }
+.btn-ghost {
+  background: none; color: var(--text3);
+  border: none; font-size: 13px;
+  padding: 10px; width: 100%;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  text-decoration: underline; text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+.btn-ghost:hover { color: var(--text); }
+.btn:disabled { opacity: 0.38; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.btn-danger {
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1px solid rgba(192,57,43,0.2);
+}
+.btn-danger:hover { background: #fbd9d7; }
+
+/* ── FORM ELEMENTS ── */
+.lbl {
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 8px; display: block; font-weight: 500;
+}
 input[type=text], input[type=number], select {
-  width:100%; background:var(--w10); border:1px solid var(--w20); border-radius:10px;
-  padding:14px 16px; color:white; font-family:'DM Sans',sans-serif; font-size:16px; outline:none;
-  transition:border-color 0.2s; -webkit-appearance:none; margin-bottom:20px;
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 13px 14px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  margin-bottom: 16px;
 }
-input:focus, select:focus { border-color:white; }
-input::placeholder { color:var(--w60); }
-select option { background:#3d7a1e; color:white; }
-.stitle { font-family:'Abril Fatface',cursive; font-size:24px; margin-bottom:6px; }
-.ssub { font-size:13px; color:var(--w60); margin-bottom:24px; }
-.code-box { background:var(--w10); border:1px solid var(--w20); border-radius:12px; padding:20px; text-align:center; margin:20px 0; }
-.code-lbl { font-size:11px; letter-spacing:3px; color:var(--w60); text-transform:uppercase; margin-bottom:8px; }
-.code-val { font-family:'Abril Fatface',cursive; font-size:24px; letter-spacing:3px; color:white; word-break:break-all; }
-.recovery-box { background:rgba(0,0,0,0.4); border:2px solid var(--w20); border-radius:16px; padding:24px; text-align:center; margin:20px 0; }
-.recovery-code-display { font-family:'Abril Fatface',cursive; font-size:22px; letter-spacing:4px; color:white; margin:12px 0; word-break:break-all; line-height:1.4; }
-.recovery-warning { font-size:12px; color:var(--w60); line-height:1.7; margin-top:12px; }
-.dh { display:flex; align-items:center; justify-content:space-between; padding:20px 16px 0; }
-.club-name { font-family:'Abril Fatface',cursive; font-size:20px; }
-.club-sub { font-size:11px; color:var(--w60); }
-.stats-row { display:flex; gap:10px; margin:16px 16px 0; }
-.stat-card { flex:1; background:rgba(0,0,0,0.3); border-radius:12px; padding:14px 10px; text-align:center; border:1px solid var(--w20); }
-.stat-lbl { font-size:10px; letter-spacing:2px; color:var(--w60); text-transform:uppercase; margin-bottom:4px; }
-.stat-val { font-family:'Abril Fatface',cursive; font-size:24px; }
-.tabs { display:flex; margin:16px 16px 0; background:rgba(0,0,0,0.2); border-radius:12px; padding:4px; }
-.tab-btn { flex:1; padding:10px; background:none; border:none; color:var(--w60); font-size:13px; font-family:'DM Sans',sans-serif; font-weight:500; cursor:pointer; border-radius:10px; transition:all 0.2s; }
-.tab-btn.active { background:white; color:var(--gp); font-weight:600; }
-.sq-counter { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:var(--w10); border-radius:10px; margin-bottom:12px; }
-.sq-cnt-txt { font-size:13px; color:var(--w60); }
-.sq-cnt-num { font-family:'Abril Fatface',cursive; font-size:20px; }
-.pl-row { display:flex; align-items:center; justify-content:space-between; background:var(--w10); border:1px solid transparent; border-radius:10px; padding:12px 14px; cursor:pointer; transition:all 0.2s; margin-bottom:8px; }
-.pl-row:hover { background:var(--w20); }
-.pl-row.selected { border-color:white; background:var(--w20); }
-.pl-row.disabled { opacity:0.4; cursor:not-allowed; }
-.pl-name { font-size:14px; font-weight:600; }
-.pl-meta { font-size:11px; color:var(--w60); margin-top:2px; }
-.pl-check { width:24px; height:24px; border:2px solid var(--w60); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; transition:all 0.2s; flex-shrink:0; }
-.pl-row.selected .pl-check { background:white; border-color:white; color:var(--gp); }
-.sq-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.sq-card { background:var(--w10); border-radius:10px; padding:10px 8px; text-align:center; }
-.sq-card-name { font-size:11px; font-weight:600; line-height:1.3; }
-.sq-card-team { font-size:10px; color:var(--w60); margin-top:2px; }
-.sq-card-pts { font-family:'Abril Fatface',cursive; font-size:16px; margin-top:4px; }
-.lb-row { display:flex; align-items:center; padding:12px 16px; background:var(--w10); border-radius:10px; margin-bottom:8px; gap:12px; }
-.lb-row.you { background:var(--w20); border:1px solid white; }
-.lb-rank { font-family:'Abril Fatface',cursive; font-size:18px; width:28px; text-align:center; }
-.lb-name { font-size:14px; font-weight:600; flex:1; }
-.lb-score { font-family:'Abril Fatface',cursive; font-size:20px; }
-.modal-ov { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); z-index:200; display:none; align-items:center; justify-content:center; padding:24px; }
-.modal-ov.active { display:flex; }
-.modal { background:var(--gp); background-image:repeating-linear-gradient(90deg,rgba(141,198,63,0.12) 0px,rgba(141,198,63,0.12) 32px,transparent 32px,transparent 64px); border:1px solid var(--w20); border-radius:var(--r); padding:28px 24px; width:100%; max-width:400px; max-height:85vh; overflow-y:auto; }
-.modal-title { font-family:'Abril Fatface',cursive; font-size:22px; margin-bottom:6px; }
-.modal-sub { font-size:13px; color:var(--w60); margin-bottom:24px; }
-.modal-close { float:right; background:var(--w10); border:none; color:white; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px; }
-.pin-dots { display:flex; gap:12px; justify-content:center; margin:20px 0; }
-.pin-dot { width:14px; height:14px; border-radius:50%; border:2px solid var(--w60); transition:all 0.2s; }
-.pin-dot.filled { background:white; border-color:white; }
-.pin-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px; }
-.pin-key { padding:18px; background:var(--w10); border:none; border-radius:10px; color:white; font-size:20px; font-family:'Abril Fatface',cursive; cursor:pointer; transition:background 0.15s; }
-.pin-key:hover { background:var(--w20); }
-.adm-pl { background:var(--w10); border-radius:10px; padding:12px; margin-bottom:8px; }
-.adm-pl-name { font-size:13px; font-weight:600; margin-bottom:8px; }
-.adm-inputs { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
-.adm-iw label { font-size:10px; color:var(--w60); letter-spacing:1px; display:block; margin-bottom:4px; }
-.adm-iw input { padding:8px 10px; font-size:14px; margin-bottom:0; }
-.adm-team-won { display:flex; align-items:center; justify-content:space-between; background:rgba(141,198,63,0.15); border:1px solid rgba(141,198,63,0.3); border-radius:10px; padding:14px 16px; margin-bottom:16px; }
-.adm-team-won-label { font-size:14px; font-weight:600; }
-.adm-team-won-sub { font-size:11px; color:var(--w60); margin-top:2px; }
-.toggle { width:44px; height:24px; background:var(--w20); border-radius:12px; cursor:pointer; position:relative; border:none; transition:background 0.2s; }
-.toggle.on { background:var(--gl); }
-.toggle::after { content:''; position:absolute; width:18px; height:18px; background:white; border-radius:50%; top:3px; left:3px; transition:left 0.2s; }
-.toggle.on::after { left:23px; }
-.rule-row { display:flex; gap:12px; margin-bottom:16px; align-items:flex-start; }
-.rule-icon { font-size:24px; flex-shrink:0; }
-.rule-title { font-size:14px; font-weight:600; margin-bottom:4px; }
-.rule-desc { font-size:12px; color:var(--w60); line-height:1.6; }
-.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:rgba(0,0,0,0.85); color:white; padding:12px 24px; border-radius:100px; font-size:14px; font-weight:500; transition:transform 0.3s; z-index:300; white-space:nowrap; }
-.toast.show { transform:translateX(-50%) translateY(0); }
-.footer { text-align:center; padding:24px; font-size:11px; color:var(--w60); letter-spacing:1px; }
-::-webkit-scrollbar { width:4px; }
-::-webkit-scrollbar-thumb { background:var(--w20); border-radius:2px; }
-.club-card { background:rgba(0,0,0,0.3); backdrop-filter:blur(10px); border:1px solid var(--w20); border-radius:var(--r); padding:20px; margin:0 16px 12px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:space-between; }
-.club-card:hover { background:rgba(0,0,0,0.4); transform:translateY(-1px); }
-.club-card-name { font-family:'Abril Fatface',cursive; font-size:18px; margin-bottom:4px; }
-.club-card-meta { font-size:11px; color:var(--w60); letter-spacing:1px; }
-.club-card-arrow { font-size:20px; color:var(--w60); }
-.btn-danger { background:rgba(220,50,50,0.2); color:#ff6b6b; border:1px solid rgba(220,50,50,0.4); }
-.btn-danger:hover { background:rgba(220,50,50,0.35); }
-.adm-hint { font-size:11px; color:var(--w60); text-align:center; margin-bottom:14px; line-height:1.7; padding:10px; background:var(--w10); border-radius:8px; }
+input:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,45,0.10);
+}
+input::placeholder { color: var(--text3); }
+select option { background: white; color: var(--text); }
+
+/* ── SCREEN TITLES ── */
+.stitle { font-family: 'Abril Fatface', cursive; font-size: 26px; color: var(--text); margin-bottom: 4px; }
+.ssub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
+
+/* ── CODE BOX ── */
+.code-box {
+  background: var(--accent-light);
+  border: 1.5px solid rgba(45,106,45,0.2);
+  border-radius: var(--r);
+  padding: 20px; text-align: center; margin: 0 0 20px;
+}
+.code-lbl { font-size: 10px; letter-spacing: 2.5px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+.code-val { font-family: 'Abril Fatface', cursive; font-size: 22px; letter-spacing: 3px; color: var(--accent); word-break: break-all; }
+
+/* ── RECOVERY BOX ── */
+.recovery-box {
+  background: var(--accent-light);
+  border: 2px solid rgba(45,106,45,0.25);
+  border-radius: var(--r);
+  padding: 24px; text-align: center; margin-bottom: 20px;
+}
+.recovery-code-display {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 20px; letter-spacing: 3px;
+  color: var(--accent); margin: 10px 0;
+  word-break: break-all; line-height: 1.5;
+}
+.recovery-warning { font-size: 12px; color: var(--text2); line-height: 1.8; margin-top: 10px; }
+
+/* ── DASHBOARD HEADER ── */
+.dh {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 16px 0;
+}
+.club-name { font-family: 'Abril Fatface', cursive; font-size: 22px; color: var(--text); }
+.club-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.rules-btn {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.rules-btn:hover { background: var(--bg2); }
+
+/* ── STATS ROW ── */
+.stats-row { display: flex; gap: 10px; margin: 16px 16px 0; }
+.stat-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 14px 10px; text-align: center;
+  box-shadow: var(--shadow);
+}
+.stat-lbl { font-size: 10px; letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; margin-bottom: 4px; font-weight: 500; }
+.stat-val { font-family: 'Abril Fatface', cursive; font-size: 26px; color: var(--accent); }
+
+/* ── TABS ── */
+.tabs {
+  display: flex; margin: 16px 16px 0;
+  background: var(--bg2);
+  border-radius: var(--r-sm);
+  padding: 4px;
+  border: 1px solid var(--border);
+}
+.tab-btn {
+  flex: 1; padding: 10px;
+  background: none; border: none;
+  color: var(--text3); font-size: 13px;
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+  cursor: pointer; border-radius: 8px; transition: all 0.18s;
+}
+.tab-btn.active { background: var(--surface); color: var(--accent); font-weight: 600; box-shadow: var(--shadow); }
+
+/* ── SQUAD SELECTOR ── */
+.sq-counter {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--accent-light);
+  border: 1px solid rgba(45,106,45,0.15);
+  border-radius: var(--r-sm); margin-bottom: 14px;
+}
+.sq-cnt-txt { font-size: 13px; color: var(--accent); font-weight: 500; }
+.sq-cnt-num { font-family: 'Abril Fatface', cursive; font-size: 20px; color: var(--accent); }
+
+.pl-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  cursor: pointer; transition: all 0.15s; margin-bottom: 8px;
+}
+.pl-row:hover { border-color: var(--accent); background: var(--accent-light); }
+.pl-row.selected { border-color: var(--accent); background: var(--accent-light); }
+.pl-row.disabled { opacity: 0.35; cursor: not-allowed; }
+.pl-row.disabled:hover { border-color: var(--border); background: var(--surface); }
+.pl-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.pl-meta { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.pl-check {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; transition: all 0.15s; flex-shrink: 0; color: transparent;
+}
+.pl-row.selected .pl-check { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* ── SQUAD GRID ── */
+.sq-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.sq-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 10px 8px; text-align: center;
+  box-shadow: var(--shadow);
+}
+.sq-card-name { font-size: 11px; font-weight: 600; line-height: 1.3; color: var(--text); }
+.sq-card-team { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.sq-card-pts { font-family: 'Abril Fatface', cursive; font-size: 17px; color: var(--accent); margin-top: 4px; }
+
+/* ── LEADERBOARD ── */
+.lb-row {
+  display: flex; align-items: center;
+  padding: 13px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm); margin-bottom: 8px; gap: 12px;
+  box-shadow: var(--shadow);
+}
+.lb-row.you {
+  background: var(--accent-light);
+  border-color: rgba(45,106,45,0.3);
+}
+.lb-rank { font-family: 'Abril Fatface', cursive; font-size: 18px; width: 28px; text-align: center; color: var(--text2); }
+.lb-name { font-size: 14px; font-weight: 600; flex: 1; color: var(--text); }
+.lb-score { font-family: 'Abril Fatface', cursive; font-size: 22px; color: var(--accent); }
+
+/* ── MODALS ── */
+.modal-ov {
+  position: fixed; inset: 0;
+  background: rgba(26,26,26,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 200; display: none;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.modal-ov.active { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 24px;
+  width: 100%; max-width: 420px;
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: var(--shadow-md);
+}
+.modal-title { font-family: 'Abril Fatface', cursive; font-size: 24px; color: var(--text); margin-bottom: 4px; }
+.modal-sub { font-size: 13px; color: var(--text2); margin-bottom: 24px; }
+.modal-close {
+  float: right;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  width: 32px; height: 32px;
+  border-radius: 50%; cursor: pointer; font-size: 14px;
+  transition: all 0.15s;
+}
+.modal-close:hover { background: var(--bg2); }
+
+/* ── PIN ── */
+.pin-dots { display: flex; gap: 12px; justify-content: center; margin: 20px 0; }
+.pin-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--border2); transition: all 0.15s;
+}
+.pin-dot.filled { background: var(--accent); border-color: var(--accent); }
+.pin-pad { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 16px; }
+.pin-key {
+  padding: 18px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text); font-size: 20px;
+  font-family: 'Abril Fatface', cursive;
+  cursor: pointer; transition: all 0.12s;
+}
+.pin-key:hover { background: var(--bg2); border-color: var(--border2); }
+.pin-key:active { transform: scale(0.95); }
+
+/* ── ADMIN PANEL ── */
+.adm-pl {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 14px; margin-bottom: 10px;
+}
+.adm-pl-name { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text); }
+.adm-inputs { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
+.adm-iw label { font-size: 10px; color: var(--text3); letter-spacing: 1px; display: block; margin-bottom: 4px; font-weight: 500; }
+.adm-iw input { padding: 9px 10px; font-size: 14px; margin-bottom: 0; }
+
+.adm-team-won {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--accent-light);
+  border: 1px solid rgba(45,106,45,0.2);
+  border-radius: var(--r-sm);
+  padding: 14px 16px; margin-bottom: 14px;
+}
+.adm-team-won-label { font-size: 14px; font-weight: 600; color: var(--text); }
+.adm-team-won-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+/* ── TOGGLE ── */
+.toggle {
+  width: 44px; height: 24px;
+  background: var(--border2);
+  border-radius: 12px; cursor: pointer;
+  position: relative; border: none; transition: background 0.2s; flex-shrink: 0;
+}
+.toggle.on { background: var(--accent); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 3px; left: 3px;
+  transition: left 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle.on::after { left: 23px; }
+
+.adm-hint {
+  font-size: 11px; color: var(--text2); text-align: center;
+  margin-bottom: 14px; line-height: 1.7; padding: 10px 12px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+
+/* ── RULE ROWS ── */
+.rule-row { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+.rule-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.rule-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+.rule-desc { font-size: 12px; color: var(--text2); line-height: 1.7; }
+
+/* ── CLUB CARDS (home) ── */
+.club-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  margin: 0 16px 10px;
+  cursor: pointer; transition: all 0.18s;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+.club-card:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.club-card-name { font-family: 'Abril Fatface', cursive; font-size: 18px; color: var(--text); margin-bottom: 3px; }
+.club-card-meta { font-size: 11px; color: var(--text3); letter-spacing: 0.5px; }
+.club-card-arrow { font-size: 22px; color: var(--text3); }
+
+/* ── HOME ACTION BUTTONS ── */
+.home-actions { padding: 0 16px 4px; }
+.home-actions .btn { margin-bottom: 8px; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  padding: 16px 16px 8px;
+  font-size: 10px; color: var(--text3);
+  letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 24px;
+  left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--text);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 100px; font-size: 13px; font-weight: 500;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 300; white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── FOOTER ── */
+.footer { text-align: center; padding: 28px 20px; font-size: 11px; color: var(--text3); letter-spacing: 0.5px; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── SCREEN PADDING ── */
+.screen-pad { padding: 28px 16px 0; }
+
+/* ── SHARE BTN (small) ── */
+.share-btn {
+  background: var(--bg); border: 1px solid var(--border2);
+  color: var(--text2); padding: 7px 14px;
+  border-radius: 20px; font-size: 12px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500;
+  transition: all 0.15s;
+}
+.share-btn:hover { background: var(--bg2); }
 </style>
 </head>
 <body>
@@ -153,30 +490,30 @@ select option { background:#3d7a1e; color:white; }
     <span class="logo-text">Kicket</span>
     <span class="logo-sub">Family. Friends. Cricket.</span>
   </div>
-  <button onclick="goHome()" style="background:var(--w10);border:1px solid var(--w20);color:white;padding:8px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">← All Clubhouses</button>
+  <button class="nav-back" onclick="goHome()">← All Clubhouses</button>
 </nav>
 
-<!-- MY CLUBHOUSES -->
+<!-- HOME -->
 <div class="screen" id="screen-home">
-  <div class="hero" style="padding-bottom:24px">
+  <div class="hero">
     <h1>Kicket</h1>
     <p>Family. Friends. Cricket.</p>
   </div>
-  <div style="padding:0 16px 12px">
-    <button class="btn btn-primary" style="margin-bottom:10px" onclick="go('screen-create')">+ Create a Clubhouse</button>
-    <button class="btn btn-secondary" style="margin-bottom:6px" onclick="go('screen-join')">+ Join a Clubhouse</button>
+  <div class="home-actions">
+    <button class="btn btn-primary" onclick="go('screen-create')">+ Create a Clubhouse</button>
+    <button class="btn btn-secondary" onclick="go('screen-join')">+ Join a Clubhouse</button>
     <button class="btn-ghost" onclick="go('screen-recover')">Recover my Account</button>
   </div>
-  <div style="padding:20px 16px 8px;font-size:11px;color:var(--w60);letter-spacing:2px;text-transform:uppercase">My Clubhouses</div>
+  <div class="section-label">My Clubhouses</div>
   <div id="myClubsList">
-    <div style="text-align:center;padding:32px 24px;color:var(--w60);font-size:13px">No clubhouses yet.<br>Create or join one above!</div>
+    <div style="text-align:center;padding:40px 24px;color:var(--text3);font-size:13px;line-height:1.8">No clubhouses yet.<br>Create or join one above!</div>
   </div>
   <div class="footer">Created by Abhishek Sarkar · abhishek.stat.iitk@gmail.com</div>
 </div>
 
-<!-- CREATE CLUBHOUSE -->
+<!-- CREATE -->
 <div class="screen" id="screen-create">
-  <div style="padding:32px 16px 0">
+  <div class="screen-pad">
     <div class="stitle">Create a Clubhouse</div>
     <div class="ssub">Start your private IPL 2026 space</div>
   </div>
@@ -189,7 +526,7 @@ select option { background:#3d7a1e; color:white; }
 
 <!-- SHARE CODE -->
 <div class="screen" id="screen-sharecode">
-  <div style="padding:32px 16px 0">
+  <div class="screen-pad">
     <div class="stitle">Clubhouse Ready!</div>
     <div class="ssub">Share this code with your people</div>
   </div>
@@ -198,14 +535,14 @@ select option { background:#3d7a1e; color:white; }
       <div class="code-lbl">Your Clubhouse Code</div>
       <div class="code-val" id="displayCode"></div>
     </div>
-    <button class="btn btn-primary" style="margin-bottom:12px" onclick="shareInvite()">Share Invite on WhatsApp</button>
+    <button class="btn btn-primary" style="margin-bottom:10px" onclick="shareInvite()">Share Invite on WhatsApp</button>
     <button class="btn btn-secondary" onclick="openDash()">Continue →</button>
   </div>
 </div>
 
 <!-- ENTER NAME -->
 <div class="screen" id="screen-name">
-  <div style="padding:32px 16px 0">
+  <div class="screen-pad">
     <div class="stitle">What's your name?</div>
     <div class="ssub">So your people know who you are</div>
   </div>
@@ -216,9 +553,9 @@ select option { background:#3d7a1e; color:white; }
   </div>
 </div>
 
-<!-- RECOVERY CODE SCREEN — shown after name is saved for first time -->
+<!-- RECOVERY CODE -->
 <div class="screen" id="screen-recoverycode">
-  <div style="padding:32px 16px 0">
+  <div class="screen-pad">
     <div class="stitle">Save Your Recovery Code</div>
     <div class="ssub">You'll need this if you switch devices or clear your browser</div>
   </div>
@@ -228,14 +565,14 @@ select option { background:#3d7a1e; color:white; }
       <div class="recovery-code-display" id="myRecoveryCode">—</div>
       <div class="recovery-warning">Screenshot this or save it somewhere safe.<br>This is the only way to recover your account.</div>
     </div>
-    <button class="btn btn-primary" style="margin-bottom:12px" onclick="copyRecoveryCode()">Copy Code</button>
+    <button class="btn btn-primary" style="margin-bottom:10px" onclick="copyRecoveryCode()">Copy Code</button>
     <button class="btn btn-secondary" onclick="afterRecoveryCode()">I've saved it →</button>
   </div>
 </div>
 
-<!-- JOIN CLUBHOUSE -->
+<!-- JOIN -->
 <div class="screen" id="screen-join">
-  <div style="padding:32px 16px 0">
+  <div class="screen-pad">
     <div class="stitle">Join a Clubhouse</div>
     <div class="ssub">Enter the code shared by your friend</div>
   </div>
@@ -246,17 +583,17 @@ select option { background:#3d7a1e; color:white; }
   </div>
 </div>
 
-<!-- RECOVER ACCOUNT -->
+<!-- RECOVER -->
 <div class="screen" id="screen-recover">
-  <div style="padding:32px 16px 0">
+  <div class="screen-pad">
     <div class="stitle">Recover my Account</div>
     <div class="ssub">Enter your recovery code to restore everything</div>
   </div>
   <div class="card">
     <label class="lbl">Recovery Code</label>
     <input type="text" id="recoverCodeInput" placeholder="Kicket-XXXX-XXXX" maxlength="20" style="letter-spacing:2px">
-    <button class="btn btn-primary" onclick="recoverAccount()">Restore my Account →</button>
-    <button class="btn-ghost" style="margin-top:8px" onclick="go('screen-home')">Back</button>
+    <button class="btn btn-primary" style="margin-bottom:10px" onclick="recoverAccount()">Restore my Account →</button>
+    <button class="btn-ghost" onclick="go('screen-home')">Back</button>
   </div>
 </div>
 
@@ -267,7 +604,7 @@ select option { background:#3d7a1e; color:white; }
       <div class="club-name" id="dashName"></div>
       <div class="club-sub" id="dashSub"></div>
     </div>
-    <button onclick="openModal('modal-rules')" style="background:var(--w10);border:1px solid var(--w20);color:white;padding:8px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">Points Rules</button>
+    <button class="rules-btn" onclick="openModal('modal-rules')">Points Rules</button>
   </div>
   <div class="stats-row">
     <div class="stat-card"><div class="stat-lbl">My Score</div><div class="stat-val" id="myScore">0</div></div>
@@ -300,19 +637,21 @@ select option { background:#3d7a1e; color:white; }
         <option value="LSG">Lucknow Super Giants</option>
       </select>
       <div id="plList"></div>
-      <button class="btn btn-primary" style="margin-top:12px" id="lockBtn" onclick="lockSquad()" disabled>Lock My Squad →</button>
+      <button class="btn btn-primary" style="margin-top:4px" id="lockBtn" onclick="lockSquad()" disabled>Lock My Squad →</button>
     </div>
     <div id="squadPanel" style="display:none">
-      <div style="font-size:13px;color:var(--w60);margin-bottom:12px">Your squad is locked 🔒</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+        <span>🔒</span><span>Your squad is locked for IPL 2026</span>
+      </div>
       <div class="sq-grid" id="sqGrid"></div>
       <button class="btn btn-secondary" style="margin-top:16px" onclick="shareLeaderboard()">Share Leaderboard</button>
     </div>
   </div>
 
   <div id="panel-lb" style="padding:16px;display:none">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div style="font-size:13px;color:var(--w60)">Live standings</div>
-      <button onclick="shareLeaderboard()" style="background:var(--w10);border:1px solid var(--w20);color:white;padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">Share</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div style="font-size:12px;color:var(--text3);font-weight:500">Live standings</div>
+      <button class="share-btn" onclick="shareLeaderboard()">Share</button>
     </div>
     <div id="lbList"></div>
   </div>
@@ -320,7 +659,7 @@ select option { background:#3d7a1e; color:white; }
   <div class="footer">playkicket.github.io</div>
 </div>
 
-<!-- MODAL: POINTS RULES -->
+<!-- MODAL: RULES -->
 <div class="modal-ov" id="modal-rules">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-rules')">✕</button>
@@ -389,9 +728,9 @@ select option { background:#3d7a1e; color:white; }
       <button class="btn btn-primary" style="margin-top:4px" onclick="addMatchPoints()">Add Match Points →</button>
     </div>
 
-    <div style="height:1px;background:var(--w20);margin:24px 0 16px"></div>
+    <div class="divider"></div>
     <button class="btn btn-danger" onclick="confirmReset()">Reset All Points to Zero</button>
-    <p style="font-size:11px;color:var(--w60);text-align:center;margin-top:8px">Wipes all cumulative points. Cannot be undone.</p>
+    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">Wipes all cumulative points. Cannot be undone.</p>
   </div>
 </div>
 
@@ -613,7 +952,7 @@ const PLAYERS = [
   {id:'sakib-hussain',name:'Sakib Hussain',team:'SRH',role:'BOWL'},
   {id:'onkar-tarmale',name:'Onkar Tarmale',team:'SRH',role:'BOWL'},
   {id:'amit-kumar',name:'Amit Kumar',team:'SRH',role:'BOWL'},
-  {id:'praful-hinge',name:'Praful hinge',team:'SRH',role:'BOWL'},
+  {id:'praful-hinge',name:'Praful Hinge',team:'SRH',role:'BOWL'},
   {id:'shubman-gill',name:'Shubman Gill',team:'GT',role:'BAT'},
   {id:'jos-buttler',name:'Jos Buttler',team:'GT',role:'WK-BAT'},
   {id:'kumar-kushagra',name:'Kumar Kushagra',team:'GT',role:'WK-BAT'},
@@ -626,7 +965,7 @@ const PLAYERS = [
   {id:'jason-holder',name:'Jason Holder',team:'GT',role:'ALL'},
   {id:'nishant-sindhu',name:'Nishant Sindhu',team:'GT',role:'ALL'},
   {id:'mohdarshad-khan',name:'Mohd. Arshad Khan',team:'GT',role:'ALL'},
-  {id:'jayant-yadav',name:'Jayant yadav',team:'GT',role:'ALL'},
+  {id:'jayant-yadav',name:'Jayant Yadav',team:'GT',role:'ALL'},
   {id:'rashid-khan',name:'Rashid Khan',team:'GT',role:'BOWL'},
   {id:'kagiso-rabada',name:'Kagiso Rabada',team:'GT',role:'BOWL'},
   {id:'mohammed-siraj',name:'Mohammed Siraj',team:'GT',role:'BOWL'},
@@ -667,20 +1006,11 @@ const PLAYERS = [
 ];
 window.PLAYERS = PLAYERS;
 
-// ─── STATE ───
 const S = {
-  uid: null,
-  name: '',
-  clubs: [],
-  activeCode: '',
-  playerPoints: {},
-  logoTaps: 0,
-  pin: '',
-  recoveryCode: null   // Kicket-XXXX-XXXX
+  uid: null, name: '', clubs: [], activeCode: '',
+  playerPoints: {}, logoTaps: 0, pin: '', recoveryCode: null
 };
 
-// ─── RECOVERY CODE GENERATION ───
-// Format: Kicket-XXXX-XXXX (uppercase letters + numbers, no ambiguous chars)
 function genRecoveryCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const seg = () => Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -701,7 +1031,6 @@ function loadClubsFromStorage() {
 }
 function getActiveClub() { return S.clubs.find(c => c.code === S.activeCode) || null; }
 
-// ─── INIT ───
 window.addEventListener('DOMContentLoaded', () => {
   let uid = localStorage.getItem('m_uid');
   if (!uid) { uid = 'u_' + Math.random().toString(36).substr(2,9); localStorage.setItem('m_uid', uid); }
@@ -714,7 +1043,6 @@ window.addEventListener('DOMContentLoaded', () => {
   go('screen-home');
 });
 
-// ─── NAVIGATION ───
 function go(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -724,11 +1052,10 @@ function go(id) {
 window.go = go;
 window.goHome = function() { renderHome(); go('screen-home'); };
 
-// ─── HOME ───
 function renderHome() {
   const el = document.getElementById('myClubsList');
   if (S.clubs.length === 0) {
-    el.innerHTML = `<div style="text-align:center;padding:32px 0;color:var(--w60);font-size:13px">No clubhouses yet. Create or join one!</div>`;
+    el.innerHTML = `<div style="text-align:center;padding:40px 24px;color:var(--text3);font-size:13px;line-height:1.8">No clubhouses yet.<br>Create or join one above!</div>`;
     return;
   }
   el.innerHTML = S.clubs.map(c => {
@@ -743,7 +1070,6 @@ function renderHome() {
   }).join('');
 }
 window.renderHome = renderHome;
-
 window.enterClubhouse = function(code) { S.activeCode = code; openDash(); };
 
 function genCode() {
@@ -753,7 +1079,6 @@ function genCode() {
   return 'Kicket' + r;
 }
 
-// ─── CREATE / JOIN ───
 window.createClubhouse = function() {
   const name = document.getElementById('createName').value.trim();
   if (!name) { toast('Please enter a clubhouse name'); return; }
@@ -798,31 +1123,24 @@ window.joinClubhouse = function() {
         set2(ref2(db2, `kicket/users/${rc}`), { uid: S.uid, name: S.name, at: Date.now() });
         showRecoveryCode(() => { renderHome(); go('screen-home'); toast(`Joined ${name}!`); });
       } else {
-        renderHome();
-        go('screen-home');
-        toast(`Joined ${name}!`);
+        renderHome(); go('screen-home'); toast(`Joined ${name}!`);
       }
     } else { toast('Clubhouse not found. Check the code!'); }
   });
 };
 
-// ─── SAVE NAME ───
 window.saveName = function() {
   const name = document.getElementById('nameInput').value.trim();
   if (!name) { toast('Please enter your name'); return; }
   S.name = name;
   localStorage.setItem('m_name', name);
-
-  // Generate and save recovery code if first time
   if (!S.recoveryCode) {
     const rc = genRecoveryCode();
     S.recoveryCode = rc;
     localStorage.setItem('m_recovery', rc);
-    // Save to Firebase so it can be looked up during recovery
     const {db,ref,set} = window._db;
     set(ref(db, `kicket/users/${rc}`), { uid: S.uid, name, at: Date.now() });
   }
-
   const pendingCreate = localStorage.getItem('m_pending_create_name');
   if (pendingCreate) {
     localStorage.removeItem('m_pending_create_name');
@@ -852,45 +1170,31 @@ window.saveName = function() {
   }
 };
 
-// ─── SHOW RECOVERY CODE SCREEN ───
-// Shows recovery code, then calls callback when user taps "I've saved it"
 let _afterRecoveryCallback = null;
 function showRecoveryCode(callback) {
   _afterRecoveryCallback = callback;
   document.getElementById('myRecoveryCode').textContent = S.recoveryCode;
   go('screen-recoverycode');
 }
-
 window.copyRecoveryCode = function() {
   navigator.clipboard.writeText(S.recoveryCode).then(() => toast('Recovery code copied!'));
 };
-
 window.afterRecoveryCode = function() {
   if (_afterRecoveryCallback) { _afterRecoveryCallback(); _afterRecoveryCallback = null; }
   else { renderHome(); go('screen-home'); }
 };
 
-// ─── RECOVER ACCOUNT ───
 window.recoverAccount = function() {
   const code = document.getElementById('recoverCodeInput').value.trim();
   if (!code) { toast('Please enter your recovery code'); return; }
-
   const {db,ref,get} = window._db;
   get(ref(db, `kicket/users/${code}`)).then(snap => {
-    if (!snap.exists()) {
-      toast('Code not found. Please check and try again.');
-      return;
-    }
+    if (!snap.exists()) { toast('Code not found. Please check and try again.'); return; }
     const data = snap.val();
-    // Restore identity
-    S.uid = data.uid;
-    S.name = data.name;
-    S.recoveryCode = code;
+    S.uid = data.uid; S.name = data.name; S.recoveryCode = code;
     localStorage.setItem('m_uid', data.uid);
     localStorage.setItem('m_name', data.name);
     localStorage.setItem('m_recovery', code);
-
-    // Restore clubs from Firebase — find all clubhouses this uid is a member of
     get(ref(db, 'kicket/clubs')).then(clubsSnap => {
       if (!clubsSnap.exists()) { finishRecover(); return; }
       const allClubs = clubsSnap.val();
@@ -898,28 +1202,15 @@ window.recoverAccount = function() {
       Object.entries(allClubs).forEach(([code, club]) => {
         if (club.members && club.members[data.uid]) {
           const member = club.members[data.uid];
-          restored.push({
-            code,
-            name: club.name,
-            squad: member.squad || [],
-            locked: !!(member.squad && member.squad.length === 11)
-          });
+          restored.push({code, name: club.name, squad: member.squad || [], locked: !!(member.squad && member.squad.length === 11)});
         }
       });
-      S.clubs = restored;
-      saveClubs();
-      finishRecover();
+      S.clubs = restored; saveClubs(); finishRecover();
     });
   });
 };
+function finishRecover() { toast(`Welcome back, ${S.name}!`); renderHome(); go('screen-home'); }
 
-function finishRecover() {
-  toast(`Welcome back, ${S.name}!`);
-  renderHome();
-  go('screen-home');
-}
-
-// ─── DASHBOARD ───
 function openDash() {
   const club = getActiveClub();
   if (!club) { go('screen-home'); return; }
@@ -932,7 +1223,6 @@ function openDash() {
 }
 window.openDash = openDash;
 
-// ─── LOAD PLAYER POINTS (live) ───
 function loadPlayerPoints() {
   const {db,ref,onValue,get} = window._db;
   onValue(ref(db,'kicket/playerPoints'), snap => {
@@ -965,17 +1255,13 @@ function loadPlayerPoints() {
   });
 }
 
-function calcScore(ids) {
-  return ids.reduce((tot, pid) => tot + (S.playerPoints[pid] || 0), 0);
-}
-
+function calcScore(ids) { return ids.reduce((tot, pid) => tot + (S.playerPoints[pid] || 0), 0); }
 function updateScore() {
   const club = getActiveClub();
   if (!club) return;
   document.getElementById('myScore').textContent = calcScore(club.squad).toFixed(1);
 }
 
-// ─── LEADERBOARD ───
 function loadLb() {
   const club = getActiveClub();
   if (!club) return;
@@ -998,7 +1284,6 @@ function loadLb() {
   });
 }
 
-// ─── PLAYER SELECTION ───
 window.loadTeam = function() {
   const club = getActiveClub();
   if (!club) return;
@@ -1026,26 +1311,22 @@ window.togglePl = function(pid) {
     if (club.squad.length >= 11) { toast('You can only pick 11 players'); return; }
     club.squad.push(pid);
   }
-  saveClubs();
-  window.loadTeam();
+  saveClubs(); window.loadTeam();
 };
 
 window.lockSquad = function() {
   const club = getActiveClub();
   if (!club || club.squad.length !== 11) { toast('Pick exactly 11 players'); return; }
-  club.locked = true;
-  saveClubs();
+  club.locked = true; saveClubs();
   const {db,ref,update} = window._db;
   update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {squad: club.squad});
-  showSquad();
-  toast('Squad locked!');
+  showSquad(); toast('Squad locked! 🏏');
 };
 
 function showSelector() {
   document.getElementById('selectorPanel').style.display = 'block';
   document.getElementById('squadPanel').style.display = 'none';
 }
-
 function showSquad() {
   const club = getActiveClub();
   if (!club) return;
@@ -1081,7 +1362,6 @@ window.shareLeaderboard = function() {
   else navigator.clipboard.writeText(txt).then(() => toast('Leaderboard copied!'));
 };
 
-// ─── MODALS ───
 window.openModal = function(id) { document.getElementById(id).classList.add('active'); };
 window.closeModal = function(id) {
   document.getElementById(id).classList.remove('active');
@@ -1107,22 +1387,15 @@ window.pp = function(v) {
   updateDots();
   if (S.pin.length===6) checkPin();
 };
-
 function updateDots() {
   for(let i=0;i<6;i++) document.getElementById('pd'+i).classList.toggle('filled', i<S.pin.length);
 }
-
 function checkPin() {
   const {db,ref,get} = window._db;
   get(ref(db,'adminPin')).then(snap => {
     const correct = snap.exists() ? String(snap.val()) : '123456';
-    if (S.pin===correct) {
-      closeModal('modal-pin');
-      openModal('modal-admin');
-    } else {
-      toast('Wrong PIN');
-      S.pin=''; updateDots();
-    }
+    if (S.pin===correct) { closeModal('modal-pin'); openModal('modal-admin'); }
+    else { toast('Wrong PIN'); S.pin=''; updateDots(); }
   });
 }
 
@@ -1130,19 +1403,13 @@ window.renderAdmin = function() {
   const team = document.getElementById('admTeam').value;
   const wonRow = document.getElementById('admTeamWonRow');
   const saveBtnRow = document.getElementById('admSaveBtnRow');
-  if (!team) {
-    document.getElementById('admList').innerHTML = '';
-    wonRow.style.display = 'none';
-    saveBtnRow.style.display = 'none';
-    return;
-  }
+  if (!team) { document.getElementById('admList').innerHTML=''; wonRow.style.display='none'; saveBtnRow.style.display='none'; return; }
   document.getElementById('admWonToggle').classList.remove('on');
-  wonRow.style.display = 'block';
-  saveBtnRow.style.display = 'block';
+  wonRow.style.display='block'; saveBtnRow.style.display='block';
   const list = PLAYERS.filter(p => p.team === team);
   document.getElementById('admList').innerHTML = list.map(p => `
     <div class="adm-pl">
-      <div class="adm-pl-name">${p.name} <span style="color:var(--w60);font-size:11px">${p.team} · ${p.role}</span></div>
+      <div class="adm-pl-name">${p.name} <span style="color:var(--text3);font-size:11px;font-weight:400">${p.team} · ${p.role}</span></div>
       <div class="adm-inputs">
         <div class="adm-iw"><label>Runs Scored</label><input type="number" id="ar_${p.id}" placeholder="0" min="0"></div>
         <div class="adm-iw"><label>Team Total Runs</label><input type="number" id="atr_${p.id}" placeholder="0" min="0"></div>
@@ -1198,7 +1465,6 @@ function toast(msg) {
 }
 window.toast = toast;
 window.showToast = toast;
-
 </script>
 </body>
 </html>
