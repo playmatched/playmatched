@@ -478,7 +478,7 @@ const db = getDatabase(app);
 window._db = {db, ref, set, get, onValue, update, remove};
 
 // ─── DATES — change these without affecting any user data ───
-const SQUAD_LOCK_DATE  = new Date('2026-03-10T06:30:00Z'); // March 28, 12:00 noon IST
+const SQUAD_LOCK_DATE  = new Date('2026-03-28T06:30:00Z'); // March 28, 12:00 noon IST
 const SWAP_CUTOFF_DATE = new Date('2026-12-25T06:30:00Z'); // Dec 25, 12:00 noon IST (placeholder — change when final date known)
 const MAX_SWAPS = 3;
 
@@ -1077,6 +1077,11 @@ function renderSwapBanner(club, swapOpen, swapsLeft) {
   }
 }
 
+// Returns standard competition rank (1,1,3 not 1,2,3 for tied scores)
+function getRank(entries, idx) {
+  return entries.filter(e => e.score > entries[idx].score).length + 1;
+}
+
 // ─── PLAYER POINTS ───
 function loadPlayerPoints() {
   const {db,ref,onValue,get} = window._db;
@@ -1095,14 +1100,17 @@ function loadPlayerPoints() {
             .map(([uid,m]) => ({uid, name:m.name, score: calcScore(m)}))
             .sort((a,b) => b.score - a.score);
           const myIdx = entries.findIndex(e => e.uid === S.uid);
-          document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+(myIdx+1) : '#—';
+          document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+getRank(entries, myIdx) : '#—';
           document.getElementById('topScore').textContent = entries[0] ? entries[0].score.toFixed(1) : '0';
-          lbList.innerHTML = entries.map((e,i) => `
-            <div class="lb-row ${e.uid===S.uid?'you':''}">
-              <div class="lb-rank">${i===0?'🏆':i===1?'🥈':i===2?'🥉':i+1}</div>
+          lbList.innerHTML = entries.map((e,i) => {
+            const rank = getRank(entries, i);
+            const medal = rank===1?'🏆':rank===2?'🥈':rank===3?'🥉':rank;
+            return `<div class="lb-row ${e.uid===S.uid?'you':''}">
+              <div class="lb-rank">${medal}</div>
               <div class="lb-name">${e.name}${e.uid===S.uid?' (You)':''}</div>
               <div class="lb-score">${e.score.toFixed(1)}</div>
-            </div>`).join('');
+            </div>`;
+          }).join('');
         });
       }
     }
@@ -1127,15 +1135,18 @@ function loadLb() {
       .map(([uid,m]) => ({uid, name:m.name, score: calcScore(m)}))
       .sort((a,b) => b.score - a.score);
     const myIdx = entries.findIndex(e => e.uid === S.uid);
-    document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+(myIdx+1) : '#—';
+    document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+getRank(entries, myIdx) : '#—';
     document.getElementById('topScore').textContent = entries[0] ? entries[0].score.toFixed(1) : '0';
     updateScore();
-    document.getElementById('lbList').innerHTML = entries.map((e,i) => `
-      <div class="lb-row ${e.uid===S.uid?'you':''}">
-        <div class="lb-rank">${i===0?'🏆':i===1?'🥈':i===2?'🥉':i+1}</div>
+    document.getElementById('lbList').innerHTML = entries.map((e,i) => {
+      const rank = getRank(entries, i);
+      const medal = rank===1?'🏆':rank===2?'🥈':rank===3?'🥉':rank;
+      return `<div class="lb-row ${e.uid===S.uid?'you':''}">
+        <div class="lb-rank">${medal}</div>
         <div class="lb-name">${e.name}${e.uid===S.uid?' (You)':''}</div>
         <div class="lb-score">${e.score.toFixed(1)}</div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   });
 }
 
