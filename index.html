@@ -400,7 +400,7 @@ select option { background:white; color:var(--text); }
     <div class="modal-title">How Points Work</div>
     <div class="modal-sub">IPL 2026 · Kicket scoring</div>
     <div class="rule-row"><div class="rule-icon">🏏</div><div><div class="rule-title">Batting Impact</div><div class="rule-desc">(Player Runs ÷ Team Total Runs) × 100<br>60 in 120 scores more than 60 in 220.</div></div></div>
-    <div class="rule-row"><div class="rule-icon">🎯</div><div><div class="rule-title">Bowling Impact</div><div class="rule-desc">(Player Wickets ÷ Total Wickets Fell) × 100<br>Every wicket counts more when fewer fall.</div></div></div>
+    <div class="rule-row"><div class="rule-icon">🎯</div><div><div class="rule-title">Bowling Impact</div><div class="rule-desc">(Player Wickets ÷ 10) × 100<br>1 wicket = 10 pts · 5 wickets = 50 pts</div></div></div>
     <div class="rule-row"><div class="rule-icon">🏆</div><div><div class="rule-title">Win Bonus</div><div class="rule-desc">+20 points if your player's team won.</div></div></div>
     <div class="rule-row"><div class="rule-icon">📊</div><div><div class="rule-title">Total Score</div><div class="rule-desc">Batting + Bowling + Win Bonus, cumulative across all IPL 2026 matches.</div></div></div>
     <div class="rule-row"><div class="rule-icon">🔄</div><div><div class="rule-title">Swaps</div><div class="rule-desc">After March 28, you get 3 swaps for the whole season. Swapped-out players keep their past points.</div></div></div>
@@ -1416,7 +1416,6 @@ window.renderAdmin = function() {
         <div class="adm-iw"><label>Runs Scored</label><input type="number" id="ar_${p.id}" placeholder="0" min="0"></div>
         <div class="adm-iw"><label>Team Total Runs</label><input type="number" id="atr_${p.id}" placeholder="0" min="0"></div>
         <div class="adm-iw"><label>Wickets Taken</label><input type="number" id="aw_${p.id}" placeholder="0" min="0"></div>
-        <div class="adm-iw"><label>Total Wkts Fell</label><input type="number" id="atw_${p.id}" placeholder="0" min="0"></div>
       </div>
     </div>`).join('');
 };
@@ -1434,12 +1433,11 @@ window.addMatchPoints = function() {
       const runs      = parseInt(document.getElementById('ar_'+p.id)?.value)  || 0;
       const teamRuns  = parseInt(document.getElementById('atr_'+p.id)?.value) || 0;
       const wickets   = parseInt(document.getElementById('aw_'+p.id)?.value)  || 0;
-      const totalWkts = parseInt(document.getElementById('atw_'+p.id)?.value) || 0;
       const didBat  = runs > 0 && teamRuns > 0;
-      const didBowl = wickets > 0 && totalWkts > 0;
+      const didBowl = wickets > 0;
       if (!didBat && !didBowl && !teamWon) return;
       const bat      = didBat  ? (runs / teamRuns) * 100 : 0;
-      const bowl     = didBowl ? (wickets / totalWkts) * 100 : 0;
+      const bowl     = didBowl ? (wickets / 10) * 100 : 0;
       const winBonus = teamWon ? 20 : 0;
       const matchPts = Math.max(0, bat) + Math.max(0, bowl) + winBonus;
       updates[`kicket/playerPoints/${p.id}`] = (current[p.id] || 0) + matchPts;
