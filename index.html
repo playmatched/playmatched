@@ -195,6 +195,13 @@ select option { background:white; color:var(--text); }
 .share-btn { background:var(--bg); border:1px solid var(--border2); color:var(--text2); padding:7px 14px; border-radius:20px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:all 0.15s; }
 .share-btn:hover { background:var(--bg2); }
 </style>
+<script>
+  const version = "v1";
+  if (localStorage.getItem("site_version") !== version) {
+    localStorage.setItem("site_version", version);
+    location.reload(true);
+  }
+</script>
 </head>
 <body>
 
