@@ -8,10 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kicket</title>
 <script>
-  const VERSION = '1.0.3';
+  const VERSION = '1.0.4';
   if (localStorage.getItem('kv') !== VERSION) {
     localStorage.setItem('kv', VERSION);
-    if (performance.navigation.type !== 1) location.reload(true);
+    location.reload(true);
   }
 </script>
 <meta name="description" content="Kicket — Family. Friends. Cricket. Play IPL 2026 with your people. No money. No registration.">
