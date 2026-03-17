@@ -212,11 +212,7 @@ select option { background:white; color:var(--text); }
     <h1>Kicket</h1>
     <p>Family. Friends. Cricket.</p>
   </div>
-  <div class="home-actions">
-    <button class="btn btn-primary" onclick="go('screen-create')">+ Create a Clubhouse</button>
-    <button class="btn btn-secondary" onclick="go('screen-join')">+ Join a Clubhouse</button>
-    <button class="btn-ghost" onclick="go('screen-recover')">Recover my Account</button>
-  </div>
+  <div class="home-actions" id="homeActions"></div>
   <div class="section-label">My Clubhouses</div>
   <div id="myClubsList">
     <div style="text-align:center;padding:40px 24px;color:var(--text3);font-size:13px;line-height:1.8">No clubhouses yet.<br>Create or join one above!</div>
@@ -819,6 +815,21 @@ window.goHome = function() { renderHome(); go('screen-home'); };
 
 // ─── HOME ───
 function renderHome() {
+  const actionsEl = document.getElementById('homeActions');
+  if (isSquadLocked()) {
+    actionsEl.innerHTML = `
+      <div style="background:var(--accent-light);border:1.5px solid rgba(45,106,45,0.2);border-radius:var(--r);padding:20px 18px;margin-bottom:8px;text-align:center">
+        <div style="font-size:20px;margin-bottom:8px">🏏</div>
+        <div style="font-family:'Abril Fatface',cursive;font-size:16px;color:var(--accent);margin-bottom:6px">Kicket is mid-season</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7">Join us next tournament!</div>
+      </div>
+      <button class="btn-ghost" onclick="go('screen-recover')">Recover my Account</button>`;
+  } else {
+    actionsEl.innerHTML = `
+      <button class="btn btn-primary" onclick="go('screen-create')">+ Create a Clubhouse</button>
+      <button class="btn btn-secondary" onclick="go('screen-join')">+ Join a Clubhouse</button>
+      <button class="btn-ghost" onclick="go('screen-recover')">Recover my Account</button>`;
+  }
   const el = document.getElementById('myClubsList');
   if (S.clubs.length === 0) {
     el.innerHTML = `<div style="text-align:center;padding:40px 24px;color:var(--text3);font-size:13px;line-height:1.8">No clubhouses yet.<br>Create or join one above!</div>`;
