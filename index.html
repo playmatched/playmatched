@@ -194,6 +194,10 @@ select option { background:white; color:var(--text); }
 .screen-pad { padding:28px 16px 0; }
 .share-btn { background:var(--bg); border:1px solid var(--border2); color:var(--text2); padding:7px 14px; border-radius:20px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:all 0.15s; }
 .share-btn:hover { background:var(--bg2); }
+/* Welcome modal — slide up from bottom */
+#modal-welcome { align-items:flex-end; padding:0; }
+#modal-welcome .modal { border-radius:var(--r) var(--r) 0 0; transform:translateY(100%); transition:transform 0.35s cubic-bezier(0.32,0.72,0,1); }
+#modal-welcome.active .modal { transform:translateY(0); }
 </style>
 </head>
 <body>
