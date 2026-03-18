@@ -848,7 +848,11 @@ window.goHome = function() { renderHome(); go('screen-home'); };
 // ─── WELCOME MODAL ───
 function showWelcomeIfNew() {
   if (!localStorage.getItem('kw')) {
-    setTimeout(() => openModal('modal-welcome'), 800);
+    const el = document.getElementById('modal-welcome');
+    setTimeout(() => {
+      el.style.display = 'flex';
+      setTimeout(() => el.classList.add('active'), 50);
+    }, 1200);
   }
 }
 window.closeWelcome = function() {
