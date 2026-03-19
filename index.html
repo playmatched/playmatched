@@ -97,23 +97,22 @@ select option { background:white; color:var(--text); }
 .tab-btn { flex:1; padding:10px; background:none; border:none; color:var(--text3); font-size:13px; font-family:'DM Sans',sans-serif; font-weight:500; cursor:pointer; border-radius:8px; transition:all 0.18s; }
 .tab-btn.active { background:var(--surface); color:var(--accent); font-weight:600; box-shadow:var(--shadow); }
 
-/* Slot allocation grid */
+/* Slot allocation — PANE GRID (pre-lock) */
 .slot-counter { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:var(--accent-light); border:1px solid rgba(45,106,45,0.15); border-radius:var(--r-sm); margin-bottom:14px; }
 .slot-cnt-txt { font-size:13px; color:var(--accent); font-weight:500; }
 .slot-cnt-num { font-family:'Abril Fatface',cursive; font-size:20px; color:var(--accent); }
 
-.team-slot-row { display:flex; align-items:center; background:var(--surface); border:1.5px solid var(--border); border-radius:var(--r-sm); padding:12px 14px; margin-bottom:8px; gap:12px; }
-.team-slot-row.has-slots { border-color:var(--accent); background:var(--accent-light); }
-.team-slot-row.swapping-from { border-color:var(--danger); background:var(--danger-light); }
-.team-slot-row.swapping-to { border-color:var(--accent); background:var(--accent-light); cursor:pointer; }
-.team-slot-row.swapping-to:hover { transform:translateY(-1px); }
-.team-name { font-size:14px; font-weight:600; flex:1; color:var(--text); }
-.team-abbr { font-size:11px; color:var(--text3); }
-.slot-controls { display:flex; align-items:center; gap:8px; }
+/* NEW: pane grid for pre-lock allocation */
+.team-pane-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:14px; }
+.team-pane { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--r-sm); padding:12px 10px; text-align:center; transition:all 0.15s; }
+.team-pane.has-slots { border-color:var(--accent); background:var(--accent-light); }
+.team-pane-name { font-size:11px; font-weight:600; color:var(--text); margin-bottom:1px; }
+.team-pane-abbr { font-size:10px; color:var(--text3); margin-bottom:8px; }
+.team-pane-controls { display:flex; align-items:center; justify-content:center; gap:10px; }
 .slot-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid var(--border2); background:var(--bg); color:var(--text); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; font-family:'DM Sans',sans-serif; line-height:1; }
 .slot-btn:hover { background:var(--bg2); border-color:var(--accent); }
 .slot-btn:disabled { opacity:0.3; cursor:not-allowed; }
-.slot-count { font-family:'Abril Fatface',cursive; font-size:20px; color:var(--accent); min-width:24px; text-align:center; }
+.slot-count { font-family:'Abril Fatface',cursive; font-size:22px; color:var(--accent); min-width:24px; text-align:center; }
 
 /* streak indicator */
 .streak-badge { display:inline-block; background:var(--warning); color:white; font-size:9px; font-weight:700; padding:2px 6px; border-radius:10px; letter-spacing:0.5px; margin-left:4px; }
@@ -137,6 +136,12 @@ select option { background:white; color:var(--text); }
 .swap-banner.used { background:var(--danger-light); border:1px solid rgba(192,57,43,0.2); }
 .swap-banner-text { font-size:13px; font-weight:600; }
 .swap-banner-sub { font-size:11px; color:var(--text2); margin-top:2px; }
+
+/* OLD team-slot-row kept only for swap target list */
+.team-slot-row { display:flex; align-items:center; background:var(--surface); border:1.5px solid var(--border); border-radius:var(--r-sm); padding:12px 14px; margin-bottom:8px; gap:12px; }
+.team-slot-row.has-slots { border-color:var(--accent); background:var(--accent-light); }
+.team-name { font-size:14px; font-weight:600; flex:1; color:var(--text); }
+.team-abbr { font-size:11px; color:var(--text3); }
 
 .lb-row { display:flex; align-items:center; padding:13px 16px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); margin-bottom:8px; gap:12px; box-shadow:var(--shadow); }
 .lb-row.you { background:var(--accent-light); border-color:rgba(45,106,45,0.3); }
@@ -497,7 +502,7 @@ window.TEAMS = TEAMS;
 const S = {
   uid: null, name: '', clubs: [], activeCode: '',
   logoTaps: 0, pin: '', recoveryCode: null,
-  swapPendingFrom: null,  // team id being swapped from
+  swapPendingFrom: null,
 };
 
 function genRecoveryCode() {
@@ -522,15 +527,10 @@ function loadClubsFromStorage() {
 }
 function getActiveClub() { return S.clubs.find(c => c.code === S.activeCode) || null; }
 
-// Total slots assigned so far
 function totalAssigned(slots) {
   return Object.values(slots || {}).reduce((a,b) => a+b, 0);
 }
 
-// ─── SCORE CALCULATION ───
-// teamPoints stored in Firebase: kicket/teamPoints/{teamId} = { total, streak }
-// calcScore: sum across all teams of slots * per-win-pts-so-far
-// We store cumulative score per member in Firebase directly for simplicity
 function getMemberScore(member) {
   return member.score || 0;
 }
@@ -546,7 +546,6 @@ window.addEventListener('DOMContentLoaded', () => {
   renderHome();
   go('screen-home');
   showWelcomeIfNew();
-  // render admin toggles once
   renderAdminList();
 });
 
@@ -777,8 +776,6 @@ function renderSlotPanel() {
   const club = getActiveClub();
   if (!club) return;
   const locked = isLocked();
-  const assigned = totalAssigned(club.slots);
-  const saved = assigned === TOTAL_SLOTS;
 
   if (!locked) {
     document.getElementById('selectorPanel').style.display = 'block';
@@ -792,7 +789,7 @@ function renderSlotPanel() {
   }
 }
 
-// ─── PRE-LOCK: slot allocation ───
+// ─── PRE-LOCK: pane grid allocation ───
 function renderTeamSlotList() {
   const club = getActiveClub();
   if (!club) return;
@@ -800,24 +797,29 @@ function renderTeamSlotList() {
   const assigned = totalAssigned(slots);
   const remaining = TOTAL_SLOTS - assigned;
   document.getElementById('slotsLeft').textContent = remaining;
-  document.getElementById('saveBtn').disabled = remaining !== 0;
 
-  document.getElementById('teamSlotList').innerHTML = TEAMS.map(t => {
-    const count = slots[t.id] || 0;
-    const canAdd = remaining > 0;
-    const canRemove = count > 0;
-    return `<div class="team-slot-row ${count > 0 ? 'has-slots' : ''}">
-      <div>
-        <div class="team-name">${t.name}</div>
-        <div class="team-abbr">${t.id}</div>
-      </div>
-      <div class="slot-controls">
-        <button class="slot-btn" onclick="adjustSlot('${t.id}',-1)" ${canRemove?'':'disabled'}>−</button>
-        <div class="slot-count">${count}</div>
-        <button class="slot-btn" onclick="adjustSlot('${t.id}',1)" ${canAdd?'':'disabled'}>+</button>
-      </div>
-    </div>`;
-  }).join('');
+  // Update save button: if all assigned, show "Edit My Allocation" after save; else "Save My Allocation"
+  const saveBtn = document.getElementById('saveBtn');
+  const alreadySaved = assigned === TOTAL_SLOTS && club._saved;
+  saveBtn.disabled = remaining !== 0;
+  saveBtn.textContent = alreadySaved ? 'Edit My Allocation' : 'Save My Allocation';
+
+  document.getElementById('teamSlotList').innerHTML = `<div class="team-pane-grid">` +
+    TEAMS.map(t => {
+      const count = slots[t.id] || 0;
+      const canAdd = remaining > 0;
+      const canRemove = count > 0;
+      return `<div class="team-pane ${count > 0 ? 'has-slots' : ''}">
+        <div class="team-pane-name">${t.name}</div>
+        <div class="team-pane-abbr">${t.id}</div>
+        <div class="team-pane-controls">
+          <button class="slot-btn" onclick="adjustSlot('${t.id}',-1)" ${canRemove?'':'disabled'}>−</button>
+          <div class="slot-count">${count}</div>
+          <button class="slot-btn" onclick="adjustSlot('${t.id}',1)" ${canAdd?'':'disabled'}>+</button>
+        </div>
+      </div>`;
+    }).join('') +
+  `</div>`;
 }
 
 window.adjustSlot = function(teamId, delta) {
@@ -830,6 +832,8 @@ window.adjustSlot = function(teamId, delta) {
   if (delta < 0 && current <= 0) return;
   club.slots[teamId] = current + delta;
   if (club.slots[teamId] === 0) delete club.slots[teamId];
+  // editing resets saved state so button goes back to "Save My Allocation"
+  club._saved = false;
   saveClubs();
   renderTeamSlotList();
   updateScore();
@@ -840,10 +844,13 @@ window.saveAllocation = function() {
   if (!club) return;
   const assigned = totalAssigned(club.slots);
   if (assigned !== TOTAL_SLOTS) { toast('Assign all 11 slots first'); return; }
+  club._saved = true;
   saveClubs();
   const {db,ref,update} = window._db;
   update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {slots: club.slots, score: club.score || 0});
   toast('Allocation saved! ✓ You can still change it before March 28.');
+  // Re-render to flip button label
+  renderTeamSlotList();
 };
 
 // ─── POST-LOCK: team grid ───
@@ -896,7 +903,6 @@ window.startSwap = function(teamId) {
   const team = TEAMS.find(t => t.id === teamId);
   toast(`Moving 1 slot from ${team ? team.name : teamId}. Pick target team.`);
   renderTeamGrid();
-  // show target list
   document.getElementById('swapTargetWrap').style.display = 'block';
   document.getElementById('swapTargetList').innerHTML = TEAMS
     .filter(t => t.id !== teamId)
@@ -967,7 +973,6 @@ function loadLb() {
     const getRank = (idx) => entries.filter(e => e.score > entries[idx].score).length + 1;
     document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+getRank(myIdx) : '#—';
     document.getElementById('topScore').textContent = entries[0] ? entries[0].score : '0';
-    // update local score from firebase
     if (myIdx >= 0) {
       const localClub = getActiveClub();
       if (localClub) {
@@ -1003,17 +1008,14 @@ window.addMatchPoints = function() {
 
   const {db,ref,get,update} = window._db;
 
-  // Get all clubs to update all members
   get(ref(db,'kicket/clubs')).then(clubsSnap => {
     if (!clubsSnap.exists()) { toast('No clubs found'); return; }
     const allClubs = clubsSnap.val();
     const updates = {};
 
-    // Get or init streak data
     get(ref(db,'kicket/streaks')).then(streakSnap => {
       const streaks = streakSnap.exists() ? streakSnap.val() : {};
 
-      // Calculate new streaks
       const newStreaks = {...streaks};
       TEAMS.forEach(t => {
         if (winners.includes(t.id)) {
@@ -1023,14 +1025,12 @@ window.addMatchPoints = function() {
         }
       });
 
-      // Points per slot per team this matchday
       const teamPts = {};
       winners.forEach(tid => {
-        const streak = newStreaks[tid]; // 1-based after increment
+        const streak = newStreaks[tid];
         teamPts[tid] = BASE_PTS + (streak - 1) * STREAK_BONUS;
       });
 
-      // Update each member's score across all clubs
       Object.entries(allClubs).forEach(([clubCode, club]) => {
         if (!club.members) return;
         Object.entries(club.members).forEach(([uid, member]) => {
@@ -1044,19 +1044,15 @@ window.addMatchPoints = function() {
             const newScore = (member.score || 0) + matchPts;
             updates[`kicket/clubs/${clubCode}/members/${uid}/score`] = newScore;
           }
-          // Reset swappedToday for all members (new matchday)
           updates[`kicket/clubs/${clubCode}/members/${uid}/swappedToday`] = false;
         });
       });
 
-      // Save new streaks
       updates['kicket/streaks'] = newStreaks;
 
       update(ref(db,'/'), updates).then(() => {
-        // Reset local swappedToday for current user
         S.clubs.forEach(c => { c.swappedToday = false; });
         saveClubs();
-        // Reset toggles
         TEAMS.forEach(t => document.getElementById('adm_'+t.id)?.classList.remove('on'));
         const streakMsg = winners.map(tid => {
           const s = newStreaks[tid];
@@ -1064,7 +1060,6 @@ window.addMatchPoints = function() {
         }).join(', ');
         toast(`Points added! Winners: ${streakMsg}`);
         closeModal('modal-admin');
-        // refresh dashboard if open
         const club = getActiveClub();
         if (club) { renderSlotPanel(); loadLb(); }
       });
