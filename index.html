@@ -572,7 +572,9 @@ function showWelcomeIfNew() {
 }
 window.closeWelcome = function() {
   localStorage.setItem('kw', '1');
-  closeModal('modal-welcome');
+  const el = document.getElementById('modal-welcome');
+  el.classList.remove('active');
+  setTimeout(() => { el.style.display = 'none'; }, 400);
 };
 
 // ─── HOME ───
