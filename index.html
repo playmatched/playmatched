@@ -476,14 +476,13 @@ const BASE_PTS = 10;
 const STREAK_BONUS = 5;
 
 // ─── LOCK DATE ───
-const ALLOC_LOCK_DATE = new Date('2026-03-20T06:30:00Z');
+const ALLOC_LOCK_DATE = new Date('2026-03-28T06:30:00Z');
 function isLocked() { return new Date() >= ALLOC_LOCK_DATE; }
 
 // ─── MATCHDAYS & SWAP WINDOW ───
 // Add or remove dates here as the schedule is confirmed.
 // Format: 'YYYY-MM-DD' in IST (just the date, no time).
 const MATCHDAYS = [
-  '2026-03-20',
   '2026-03-29',
   '2026-03-30',
   '2026-03-31',
@@ -520,7 +519,7 @@ function hourIST() {
 function isSwapWindowOpen() {
   const today = todayIST();
   const hour = hourIST();
-  return MATCHDAYS.includes(today) && hour < 17;
+  return MATCHDAYS.includes(today) && hour < 12;
 }
 
 // Has the current user already swapped today?
