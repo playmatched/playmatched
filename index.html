@@ -674,7 +674,7 @@ window.createClubhouse = function() {
 
 window.shareInvite = function() {
   const club = getActiveClub();
-  const txt = `Join my IPL 2026 Clubhouse on Kicket!\n\nClubhouse: ${club.name}\nCode: ${club.code}\n\nhttps://playkicket.github.io\n\nNo money. No registration. Just cricket.`;
+  const txt = `Join my IPL 2026 Clubhouse on Kicket.\n\nCode: ${club.code}\n\nhttps://playkicket.github.io`;
   if (navigator.share) navigator.share({title:'Kicket — Join my Clubhouse', text:txt});
   else navigator.clipboard.writeText(txt).then(() => toast('Invite copied!'));
 };
