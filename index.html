@@ -7,11 +7,11 @@
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kicket</title>
-<meta name="description" content="Kicket | A cricket puzzle game. Play together this IPL season with your WhatsApp circle.">
+<meta name="description" content="Kicket - Family. Friends. Fun. Play this IPL with your people. Beat them. Rule forever.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://playkicket.github.io/">
-<meta property="og:title" content="Kicket | A cricket puzzle game">
-<meta property="og:description" content="Play together this IPL season with your WhatsApp circle.">
+<meta property="og:title" content="Kicket - Family. Friends. Fun.">
+<meta property="og:description" content="Play this IPL with your people. Beat them. Rule forever.">
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -97,49 +97,42 @@ select option { background:white; color:var(--text); }
 .tab-btn { flex:1; padding:10px; background:none; border:none; color:var(--text3); font-size:13px; font-family:'DM Sans',sans-serif; font-weight:500; cursor:pointer; border-radius:8px; transition:all 0.18s; }
 .tab-btn.active { background:var(--surface); color:var(--accent); font-weight:600; box-shadow:var(--shadow); }
 
-/* Slot allocation — PANE GRID (pre-lock) */
-.slot-counter { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:var(--accent-light); border:1px solid rgba(45,106,45,0.15); border-radius:var(--r-sm); margin-bottom:14px; }
-.slot-cnt-txt { font-size:13px; color:var(--accent); font-weight:500; }
-.slot-cnt-num { font-family:'Abril Fatface',cursive; font-size:20px; color:var(--accent); }
+.sq-counter { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:var(--accent-light); border:1px solid rgba(45,106,45,0.15); border-radius:var(--r-sm); margin-bottom:14px; }
+.sq-cnt-txt { font-size:13px; color:var(--accent); font-weight:500; }
+.sq-cnt-num { font-family:'Abril Fatface',cursive; font-size:20px; color:var(--accent); }
 
-.team-pane-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:14px; }
-.team-pane { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--r-sm); padding:12px 10px; text-align:center; transition:all 0.15s; }
-.team-pane.has-slots { border-color:var(--accent); background:var(--accent-light); }
-.team-pane-name { font-size:16px; font-weight:600; color:var(--text); margin-bottom:1px; }
-.team-pane-abbr { font-size:13px; color:var(--text3); margin-bottom:8px; }
-.team-pane-controls { display:flex; align-items:center; justify-content:center; gap:10px; }
-.slot-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid var(--border2); background:var(--bg); color:var(--text); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; font-family:'DM Sans',sans-serif; line-height:1; }
-.slot-btn:hover { background:var(--bg2); border-color:var(--accent); }
-.slot-btn:disabled { opacity:0.3; cursor:not-allowed; }
-.slot-count { font-family:'Abril Fatface',cursive; font-size:22px; color:var(--accent); min-width:24px; text-align:center; }
-
-/* streak indicator */
-.streak-badge { display:inline-block; background:var(--warning); color:white; font-size:9px; font-weight:700; padding:2px 6px; border-radius:10px; letter-spacing:0.5px; margin-left:4px; }
-
-/* team card in post-lock view */
-.team-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
-.team-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); padding:12px 10px; text-align:center; box-shadow:var(--shadow); position:relative; }
-.team-card.swappable { cursor:pointer; border-color:var(--warning); background:var(--warning-light); }
-.team-card.swappable:hover { transform:translateY(-1px); }
-.team-card.no-slots { opacity:0.4; }
-.team-card-name { font-size:12px; font-weight:600; color:var(--text); margin-bottom:2px; }
-.team-card-slots { font-family:'Abril Fatface',cursive; font-size:22px; color:var(--accent); }
-.team-card-slots-lbl { font-size:9px; color:var(--text3); letter-spacing:1px; text-transform:uppercase; }
-.team-card-pts { font-size:11px; color:var(--text2); margin-top:4px; }
-.team-card-streak { font-size:9px; color:var(--warning); font-weight:700; margin-top:2px; }
-.team-card-swap-hint { font-size:9px; color:var(--warning); margin-top:3px; font-weight:600; letter-spacing:0.5px; }
-
+/* swap banner */
 .swap-banner { border-radius:var(--r-sm); padding:14px 16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .swap-banner.open { background:var(--warning-light); border:1px solid rgba(230,126,34,0.25); }
 .swap-banner.locked { background:var(--bg2); border:1px solid var(--border); }
-.swap-banner.used { background:var(--danger-light); border:1px solid rgba(192,57,43,0.2); }
+.swap-banner.exhausted { background:var(--danger-light); border:1px solid rgba(192,57,43,0.2); }
 .swap-banner-text { font-size:13px; font-weight:600; }
 .swap-banner-sub { font-size:11px; color:var(--text2); margin-top:2px; }
+.swap-dots { display:flex; gap:5px; }
+.swap-dot { width:10px; height:10px; border-radius:50%; background:var(--warning); }
+.swap-dot.used { background:var(--border2); }
 
-.team-slot-row { display:flex; align-items:center; background:var(--surface); border:1.5px solid var(--border); border-radius:var(--r-sm); padding:12px 14px; margin-bottom:8px; gap:12px; }
-.team-slot-row.has-slots { border-color:var(--accent); background:var(--accent-light); }
-.team-name { font-size:14px; font-weight:600; flex:1; color:var(--text); }
-.team-abbr { font-size:11px; color:var(--text3); }
+.pl-row { display:flex; align-items:center; justify-content:space-between; background:var(--surface); border:1.5px solid var(--border); border-radius:var(--r-sm); padding:12px 14px; cursor:pointer; transition:all 0.15s; margin-bottom:8px; }
+.pl-row:hover { border-color:var(--accent); background:var(--accent-light); }
+.pl-row.selected { border-color:var(--accent); background:var(--accent-light); }
+.pl-row.disabled { opacity:0.35; cursor:not-allowed; }
+.pl-row.disabled:hover { border-color:var(--border); background:var(--surface); }
+.pl-row.in-squad { border-color:var(--accent); background:var(--accent-light); }
+.pl-row.being-removed { border-color:var(--danger); background:var(--danger-light); }
+.pl-name { font-size:14px; font-weight:600; color:var(--text); }
+.pl-meta { font-size:11px; color:var(--text3); margin-top:2px; }
+.pl-check { width:22px; height:22px; border:2px solid var(--border2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; transition:all 0.15s; flex-shrink:0; color:transparent; }
+.pl-row.selected .pl-check { background:var(--accent); border-color:var(--accent); color:white; }
+.pl-row.in-squad .pl-check { background:var(--accent); border-color:var(--accent); color:white; }
+
+.sq-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.sq-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); padding:10px 8px; text-align:center; box-shadow:var(--shadow); position:relative; }
+.sq-card.swappable { cursor:pointer; border-color:var(--warning); background:var(--warning-light); }
+.sq-card.swappable:hover { border-color:var(--warning); transform:translateY(-1px); }
+.sq-card-name { font-size:11px; font-weight:600; line-height:1.3; color:var(--text); }
+.sq-card-team { font-size:10px; color:var(--text3); margin-top:2px; }
+.sq-card-pts { font-family:'Abril Fatface',cursive; font-size:17px; color:var(--accent); margin-top:4px; }
+.sq-card-swap-hint { font-size:9px; color:var(--warning); margin-top:3px; font-weight:600; letter-spacing:0.5px; }
 
 .lb-row { display:flex; align-items:center; padding:13px 16px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); margin-bottom:8px; gap:12px; box-shadow:var(--shadow); }
 .lb-row.you { background:var(--accent-light); border-color:rgba(45,106,45,0.3); }
@@ -163,12 +156,19 @@ select option { background:white; color:var(--text); }
 .pin-key:hover { background:var(--bg2); }
 .pin-key:active { transform:scale(0.95); }
 
-.adm-team-row { display:flex; align-items:center; justify-content:space-between; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; margin-bottom:10px; }
-.adm-team-name { font-size:14px; font-weight:600; color:var(--text); }
+.adm-pl { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px; margin-bottom:10px; }
+.adm-pl-name { font-size:13px; font-weight:600; margin-bottom:10px; color:var(--text); }
+.adm-inputs { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+.adm-iw label { font-size:10px; color:var(--text3); letter-spacing:1px; display:block; margin-bottom:4px; font-weight:500; }
+.adm-iw input { padding:9px 10px; font-size:14px; margin-bottom:0; }
+.adm-team-won { display:flex; align-items:center; justify-content:space-between; background:var(--accent-light); border:1px solid rgba(45,106,45,0.2); border-radius:var(--r-sm); padding:14px 16px; margin-bottom:14px; }
+.adm-team-won-label { font-size:14px; font-weight:600; color:var(--text); }
+.adm-team-won-sub { font-size:11px; color:var(--text2); margin-top:2px; }
 .toggle { width:44px; height:24px; background:var(--border2); border-radius:12px; cursor:pointer; position:relative; border:none; transition:background 0.2s; flex-shrink:0; }
 .toggle.on { background:var(--accent); }
 .toggle::after { content:''; position:absolute; width:18px; height:18px; background:white; border-radius:50%; top:3px; left:3px; transition:left 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
 .toggle.on::after { left:23px; }
+.adm-hint { font-size:11px; color:var(--text2); text-align:center; margin-bottom:14px; line-height:1.7; padding:10px 12px; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-sm); }
 
 .rule-row { display:flex; gap:14px; margin-bottom:18px; align-items:flex-start; }
 .rule-icon { font-size:22px; flex-shrink:0; margin-top:1px; }
@@ -194,6 +194,7 @@ select option { background:white; color:var(--text); }
 .screen-pad { padding:28px 16px 0; }
 .share-btn { background:var(--bg); border:1px solid var(--border2); color:var(--text2); padding:7px 14px; border-radius:20px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:all 0.15s; }
 .share-btn:hover { background:var(--bg2); }
+/* Welcome modal — slide up from bottom */
 #modal-welcome { align-items:flex-end; padding:0; }
 #modal-welcome .modal { border-radius:var(--r) var(--r) 0 0; transform:translateY(100%); transition:transform 1.2s cubic-bezier(0.22,1,0.36,1); }
 #modal-welcome.active .modal { transform:translateY(0); }
@@ -204,7 +205,7 @@ select option { background:white; color:var(--text); }
 <nav class="nav" id="mainNav" style="display:none">
   <div class="logo" onclick="logoTap()">
     <span class="logo-text">Kicket</span>
-    <span class="logo-sub">Cricket. Family. Friends. Fun.</span>
+    <span class="logo-sub">Family. Friends. Fun.</span>
   </div>
   <button class="nav-back" onclick="goHome()">← All Clubhouses</button>
 </nav>
@@ -213,7 +214,7 @@ select option { background:white; color:var(--text); }
 <div class="screen" id="screen-home">
   <div class="hero">
     <h1>Kicket</h1>
-    <p>Cricket. Family. Friends. Fun.</p>
+    <p>Family. Friends. Fun.</p>
   </div>
   <div class="home-actions" id="homeActions"></div>
   <div class="section-label">My Clubhouses</div>
@@ -227,7 +228,7 @@ select option { background:white; color:var(--text); }
 <div class="screen" id="screen-create">
   <div class="screen-pad">
     <div class="stitle">Create a Clubhouse</div>
-    <div class="ssub">Start your private IPL 2026 group</div>
+    <div class="ssub">Start your private IPL 2026 space</div>
   </div>
   <div class="card">
     <label class="lbl">Clubhouse Name</label>
@@ -286,7 +287,7 @@ select option { background:white; color:var(--text); }
 <div class="screen" id="screen-join">
   <div class="screen-pad">
     <div class="stitle">Join a Clubhouse</div>
-    <div class="ssub">Enter the code shared with you</div>
+    <div class="ssub">Enter the code shared by your friend</div>
   </div>
   <div class="card">
     <label class="lbl">Clubhouse Code</label>
@@ -324,28 +325,59 @@ select option { background:white; color:var(--text); }
     <div class="stat-card"><div class="stat-lbl">Top Score</div><div class="stat-val" id="topScore">0</div></div>
   </div>
   <div class="tabs">
-    <button class="tab-btn active" id="tab-squad" onclick="switchTab('squad')">My Picks</button>
+    <button class="tab-btn active" id="tab-squad" onclick="switchTab('squad')">My Squad</button>
     <button class="tab-btn" id="tab-lb" onclick="switchTab('lb')">Leaderboard</button>
   </div>
 
   <div id="panel-squad" style="padding:16px">
+    <!-- PRE-LOCK: selector panel -->
     <div id="selectorPanel">
-      <div class="slot-counter">
-        <div class="slot-cnt-txt">Picks remaining</div>
-        <div class="slot-cnt-num"><span id="slotsLeft">11</span> / 11</div>
+      <div class="sq-counter">
+        <div class="sq-cnt-txt">Players selected</div>
+        <div class="sq-cnt-num"><span id="selCount">0</span> / 11</div>
       </div>
-      <div id="teamSlotList"></div>
-      <button class="btn btn-primary" style="margin-top:4px" id="saveBtn" onclick="saveAllocation()" disabled>Save picks</button>
+      <label class="lbl">Select Team</label>
+      <select id="teamDrop" onchange="loadTeam()">
+        <option value="">— Choose a team —</option>
+        <option value="CSK">Chennai Super Kings</option>
+        <option value="MI">Mumbai Indians</option>
+        <option value="RCB">Royal Challengers Bengaluru</option>
+        <option value="KKR">Kolkata Knight Riders</option>
+        <option value="DC">Delhi Capitals</option>
+        <option value="PBKS">Punjab Kings</option>
+        <option value="RR">Rajasthan Royals</option>
+        <option value="SRH">Sunrisers Hyderabad</option>
+        <option value="GT">Gujarat Titans</option>
+        <option value="LSG">Lucknow Super Giants</option>
+      </select>
+      <div id="plList"></div>
+      <button class="btn btn-primary" style="margin-top:4px" id="saveBtn" onclick="saveSquad()" disabled>Save My Squad</button>
     </div>
 
+    <!-- POST-LOCK: squad panel -->
     <div id="squadPanel" style="display:none">
       <div id="swapBanner"></div>
-      <div id="swapTargetWrap" style="display:none">
-        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">Choose a team to swap</div>
-        <div id="swapTargetList"></div>
+      <div id="swapSelectorWrap" style="display:none">
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">Choose a player to swap in:</div>
+        <label class="lbl">Select Team</label>
+        <select id="swapTeamDrop" onchange="loadSwapTeam()">
+          <option value="">— Choose a team —</option>
+          <option value="CSK">Chennai Super Kings</option>
+          <option value="MI">Mumbai Indians</option>
+          <option value="RCB">Royal Challengers Bengaluru</option>
+          <option value="KKR">Kolkata Knight Riders</option>
+          <option value="DC">Delhi Capitals</option>
+          <option value="PBKS">Punjab Kings</option>
+          <option value="RR">Rajasthan Royals</option>
+          <option value="SRH">Sunrisers Hyderabad</option>
+          <option value="GT">Gujarat Titans</option>
+          <option value="LSG">Lucknow Super Giants</option>
+        </select>
+        <div id="swapPlList"></div>
         <button class="btn btn-secondary" style="margin-top:8px;margin-bottom:16px" onclick="cancelSwap()">Cancel</button>
       </div>
-      <div class="team-grid" id="teamGrid"></div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:10px" id="squadLockLabel"></div>
+      <div class="sq-grid" id="sqGrid"></div>
       <button class="btn btn-secondary" style="margin-top:16px" onclick="shareLeaderboard()">Share Leaderboard</button>
     </div>
   </div>
@@ -365,11 +397,14 @@ select option { background:white; color:var(--text); }
 <div class="modal-ov" id="modal-rules">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-rules')">✕</button>
-    <div class="modal-title" style="padding-bottom: 16px;">How points work</div>
-    <div class="rule-row"><div><div class="rule-title">1. Wins = points</div><div class="rule-desc">Each win earns 10 points per pick on that team.</div></div></div>
-    <div class="rule-row"><div><div class="rule-title">2. Winning streaks</div><div class="rule-desc">Consecutive wins add +5 points each time.</div></div></div>
-    <div class="rule-row"><div><div class="rule-title">3. Lose = reset</div><div class="rule-desc">A loss resets the streak. Next win starts at 10 points.</div></div></div>
-    <div class="rule-row"><div><div class="rule-title">4. No negatives</div><div class="rule-desc">No points lost. Ever.</div></div></div>
+    <div class="modal-title">How Points Work</div>
+    <div class="modal-sub">IPL 2026 · Kicket scoring</div>
+    <div class="rule-row"><div class="rule-icon">🏏</div><div><div class="rule-title">Batting Impact</div><div class="rule-desc">(Player Runs ÷ Team Total Runs) × 100<br>60 in 120 scores more than 60 in 220.</div></div></div>
+    <div class="rule-row"><div class="rule-icon">🎯</div><div><div class="rule-title">Bowling Impact</div><div class="rule-desc">(Player Wickets ÷ 10) × 100<br>1 wicket = 10 pts · 5 wickets = 50 pts</div></div></div>
+    <div class="rule-row"><div class="rule-icon">🏆</div><div><div class="rule-title">Win Bonus</div><div class="rule-desc">+20 points if your player's team won.</div></div></div>
+    <div class="rule-row"><div class="rule-icon">📊</div><div><div class="rule-title">Total Score</div><div class="rule-desc">Batting + Bowling + Win Bonus, cumulative across all IPL 2026 matches.</div></div></div>
+    <div class="rule-row"><div class="rule-icon">🔄</div><div><div class="rule-title">Swaps</div><div class="rule-desc">After March 28, you get 3 swaps for the whole season. Swapped-out players keep their past points.</div></div></div>
+    <div class="rule-row"><div class="rule-icon">✅</div><div><div class="rule-title">No Negative Points</div><div class="rule-desc">Bad match = 0 points. Never penalised.</div></div></div>
     <button class="btn btn-primary" style="margin-top:8px" onclick="closeModal('modal-rules')">Got it!</button>
   </div>
 </div>
@@ -399,46 +434,64 @@ select option { background:white; color:var(--text); }
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-admin')">✕</button>
     <div class="modal-title">Admin Panel</div>
-    <div class="modal-sub">Mark which teams won today</div>
-    <div style="font-size:12px;color:var(--text2);margin-bottom:14px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);line-height:1.7">Toggle ON for every team that won a match today. Then tap Add Match Results.</div>
+    <div class="modal-sub">Add points after each match</div>
+    <label class="lbl">Select Team</label>
+    <select id="admTeam" onchange="renderAdmin()">
+      <option value="">— Choose a team —</option>
+      <option value="CSK">CSK</option><option value="MI">MI</option><option value="RCB">RCB</option>
+      <option value="KKR">KKR</option><option value="DC">DC</option><option value="PBKS">PBKS</option>
+      <option value="RR">RR</option><option value="SRH">SRH</option><option value="GT">GT</option><option value="LSG">LSG</option>
+    </select>
+    <div id="admTeamWonRow" style="display:none">
+      <div class="adm-team-won">
+        <div>
+          <div class="adm-team-won-label">Did this team win?</div>
+          <div class="adm-team-won-sub">Applies +20 pts to all players entered below</div>
+        </div>
+        <button class="toggle" id="admWonToggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="adm-hint">Enter stats only for players who actually played.<br>Leave others blank — they won't be counted.</div>
+    </div>
     <div id="admList"></div>
-    <button class="btn btn-primary" style="margin-top:4px" onclick="addMatchPoints()">Add Match Results →</button>
+    <div id="admSaveBtnRow" style="display:none">
+      <button class="btn btn-primary" style="margin-top:4px" onclick="addMatchPoints()">Add Match Points →</button>
+    </div>
     <div class="divider"></div>
     <button class="btn btn-danger" onclick="confirmReset()">Reset All Points to Zero</button>
-    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">Wipes all cumulative points and streaks. Cannot be undone.</p>
+    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">Wipes all cumulative points. Cannot be undone.</p>
   </div>
 </div>
 
-<!-- MODAL: WELCOME -->
+<!-- MODAL: WELCOME — shows once on first visit only -->
 <div class="modal-ov" id="modal-welcome">
   <div class="modal">
-    <div style="text-align:center;margin-bottom:30px">
-      <div class="modal-title" style="text-align:center">How to Play </div>
-      <div class="modal-sub" style="text-align:center">It’s not about prediction. It’s about decision.</div>
+    <div style="text-align:center;margin-bottom:20px">
+      <div class="modal-title" style="text-align:center">Getting Started</div>
     </div>
     <div class="rule-row">
-      <div><div class="rule-title">1. Create or join a Clubhouse</div>
-      <div class="rule-desc">Start a private space for your people or join one with a code.</div></div>
+      <div class="rule-icon">🏠</div>
+      <div><div class="rule-title">Create or Join a Clubhouse</div>
+      <div class="rule-desc">Start a private space for your people or join one with a shared code.</div></div>
     </div>
     <div class="rule-row">
-      <div><div class="rule-title">2. Assign your picks</div>
-      <div class="rule-desc">You have 11 picks. Place them across teams wisely.</div></div>
+      <div class="rule-icon">🏏</div>
+      <div><div class="rule-title">Build Your IPL XI</div>
+      <div class="rule-desc">Select 11 players with no restrictions. Up to 3 changes allowed thereafter.</div></div>
     </div>
     <div class="rule-row">
-      <div><div class="rule-title">3. Manage your swaps</div>
-      <div class="rule-desc">You get one swap every matchday.</div></div>
+      <div class="rule-icon">📊</div>
+      <div><div class="rule-title">Earn Points Every Match</div>
+      <div class="rule-desc">Players earn points based on match performance. Simple rules.</div></div>
     </div>
     <div class="rule-row">
-       <div><div class="rule-title">4. Play the season</div>
-      <div class="rule-desc">Earn points as your teams win. Bonus points for winning streaks.</div></div>
+      <div class="rule-icon">🏆</div>
+      <div><div class="rule-title">Climb the Leaderboard</div>
+      <div class="rule-desc">Live standings show who's winning. Share it on your WhatsApp group and have fun!</div></div>
     </div>
     <div class="rule-row">
-      <div><div class="rule-title">5. Rule your WhatsApp circle</div>
-      <div class="rule-desc">Climb the Leaderboard for ultimate bragging rights.</div></div>
-    </div>
-    <div class="rule-row">
-      <div><div class="rule-title">6. Join before 28.03 | 12:00 IST</div>
-      <div class="rule-desc">No money. No registration. No data sharing.</div></div>
+      <div class="rule-icon">💾</div>
+      <div><div class="rule-title">Bragging Rights Only</div>
+      <div class="rule-desc">No money. No registration. No private data sharing.</div></div>
     </div>
     <button class="btn btn-primary" onclick="closeWelcome()">Let's Play →</button>
   </div>
@@ -446,7 +499,7 @@ select option { background:white; color:var(--text); }
 
 <div class="toast" id="toast"></div>
 
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, set, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
@@ -462,83 +515,274 @@ const app = initializeApp({
 const db = getDatabase(app);
 window._db = {db, ref, set, get, onValue, update, remove};
 
-// ─── CONSTANTS ───
-const TOTAL_SLOTS = 11;
-const BASE_PTS = 10;
-const STREAK_BONUS = 5;
+// ─── DATES — change these without affecting any user data ───
+const SQUAD_LOCK_DATE  = new Date('2026-03-28T06:30:00Z'); // March 28, 12:00 noon IST
+const SWAP_CUTOFF_DATE = new Date('2026-12-25T06:30:00Z'); // Dec 25, 12:00 noon IST (placeholder — change when final date known)
+const MAX_SWAPS = 3;
 
-// ─── LOCK DATE ───
-const ALLOC_LOCK_DATE = new Date('2026-03-28T06:30:00Z');
-function isLocked() { return new Date() >= ALLOC_LOCK_DATE; }
+function isSquadLocked()  { return new Date() >= SQUAD_LOCK_DATE; }
+function isSwapOpen()     { return new Date() >= SQUAD_LOCK_DATE && new Date() < SWAP_CUTOFF_DATE; }
 
-// ─── MATCHDAYS & SWAP WINDOW ───
-// Add or remove dates here as the schedule is confirmed.
-// Format: 'YYYY-MM-DD' in IST (just the date, no time).
-const MATCHDAYS = [
-  '2026-03-29',
-  '2026-03-30',
-  '2026-03-31',
-  '2026-04-01',
-  '2026-04-02',
-  '2026-04-03',
-  '2026-04-04',
-  '2026-04-05',
-  '2026-04-06',
-  '2026-04-07',
-  '2026-04-08',
-  '2026-04-09',
-  '2026-04-10',
-  '2026-04-11',
-  '2026-04-12',
+const PLAYERS = [
+  {id:'ms-dhoni',name:'MS Dhoni',team:'CSK',role:'WK-BAT'},
+  {id:'ruturaj-gaikwad',name:'Ruturaj Gaikwad',team:'CSK',role:'BAT'},
+  {id:'sanju-samson',name:'Sanju Samson',team:'CSK',role:'WK-BAT'},
+  {id:'dewald-brevis',name:'Dewald Brevis',team:'CSK',role:'BAT'},
+  {id:'ayush-mhatre',name:'Ayush Mhatre',team:'CSK',role:'BAT'},
+  {id:'kartik-sharma',name:'Kartik Sharma',team:'CSK',role:'WK-BAT'},
+  {id:'sarfaraz-khan',name:'Sarfaraz Khan',team:'CSK',role:'BAT'},
+  {id:'urvil-patel',name:'Urvil Patel',team:'CSK',role:'WK-BAT'},
+  {id:'anshul-kamboj',name:'Anshul Kamboj',team:'CSK',role:'ALL'},
+  {id:'jamie-overton',name:'Jamie Overton',team:'CSK',role:'ALL'},
+  {id:'ramakrishna-ghosh',name:'Ramakrishna Ghosh',team:'CSK',role:'ALL'},
+  {id:'shivam-dube',name:'Shivam Dube',team:'CSK',role:'ALL'},
+  {id:'prashant-veer',name:'Prashant Veer',team:'CSK',role:'ALL'},
+  {id:'matthew-short',name:'Matthew Short',team:'CSK',role:'ALL'},
+  {id:'aman-khan',name:'Aman Khan',team:'CSK',role:'ALL'},
+  {id:'zak-foulkes',name:'Zak Foulkes',team:'CSK',role:'ALL'},
+  {id:'khaleel-ahmed',name:'Khaleel Ahmed',team:'CSK',role:'BOWL'},
+  {id:'noor-ahmad',name:'Noor Ahmad',team:'CSK',role:'BOWL'},
+  {id:'mukesh-choudhary',name:'Mukesh Choudhary',team:'CSK',role:'BOWL'},
+  {id:'nathan-ellis',name:'Nathan Ellis',team:'CSK',role:'BOWL'},
+  {id:'shreyas-gopal',name:'Shreyas Gopal',team:'CSK',role:'BOWL'},
+  {id:'gurjapneet-singh',name:'Gurjapneet Singh',team:'CSK',role:'BOWL'},
+  {id:'akeal-hosein',name:'Akeal Hosein',team:'CSK',role:'BOWL'},
+  {id:'matt-henry',name:'Matt Henry',team:'CSK',role:'BOWL'},
+  {id:'rahul-chahar',name:'Rahul Chahar',team:'CSK',role:'BOWL'},
+  {id:'rohit-sharma',name:'Rohit Sharma',team:'MI',role:'BAT'},
+  {id:'suryakumar-yadav',name:'Suryakumar Yadav',team:'MI',role:'BAT'},
+  {id:'robin-minz',name:'Robin Minz',team:'MI',role:'WK-BAT'},
+  {id:'sherfane-rutherford',name:'Sherfane Rutherford',team:'MI',role:'BAT'},
+  {id:'ryan-rickelton',name:'Ryan Rickelton',team:'MI',role:'WK-BAT'},
+  {id:'quinton-dekock',name:'Quinton De Kock',team:'MI',role:'WK-BAT'},
+  {id:'danish-malewar',name:'Danish Malewar',team:'MI',role:'BAT'},
+  {id:'tilak-varma',name:'Tilak Varma',team:'MI',role:'BAT'},
+  {id:'hardik-pandya',name:'Hardik Pandya',team:'MI',role:'ALL'},
+  {id:'naman-dhir',name:'Naman Dhir',team:'MI',role:'ALL'},
+  {id:'mitchell-santner',name:'Mitchell Santner',team:'MI',role:'ALL'},
+  {id:'rajangad-bawa',name:'Raj Angad Bawa',team:'MI',role:'ALL'},
+  {id:'atharva-ankolekar',name:'Atharva Ankolekar',team:'MI',role:'ALL'},
+  {id:'mayank-rawat',name:'Mayank Rawat',team:'MI',role:'ALL'},
+  {id:'corbin-bosch',name:'Corbin Bosch',team:'MI',role:'ALL'},
+  {id:'will-jacks',name:'Will Jacks',team:'MI',role:'ALL'},
+  {id:'shardul-thakur',name:'Shardul Thakur',team:'MI',role:'ALL'},
+  {id:'jasprit-bumrah',name:'Jasprit Bumrah',team:'MI',role:'BOWL'},
+  {id:'trent-boult',name:'Trent Boult',team:'MI',role:'BOWL'},
+  {id:'mayank-markande',name:'Mayank Markande',team:'MI',role:'BOWL'},
+  {id:'deepak-chahar',name:'Deepak Chahar',team:'MI',role:'BOWL'},
+  {id:'ashwani-kumar',name:'Ashwani Kumar',team:'MI',role:'BOWL'},
+  {id:'raghu-sharma',name:'Raghu Sharma',team:'MI',role:'BOWL'},
+  {id:'mohammad-izhar',name:'Mohammad Izhar',team:'MI',role:'BOWL'},
+  {id:'allah-ghazanfar',name:'Allah Ghazanfar',team:'MI',role:'BOWL'},
+  {id:'virat-kohli',name:'Virat Kohli',team:'RCB',role:'BAT'},
+  {id:'rajat-patidar',name:'Rajat Patidar',team:'RCB',role:'BAT'},
+  {id:'devdutt-padikkal',name:'Devdutt Padikkal',team:'RCB',role:'BAT'},
+  {id:'phil-salt',name:'Phil Salt',team:'RCB',role:'WK-BAT'},
+  {id:'jitesh-sharma',name:'Jitesh Sharma',team:'RCB',role:'WK-BAT'},
+  {id:'jordan-cox',name:'Jordan Cox',team:'RCB',role:'WK-BAT'},
+  {id:'krunal-pandya',name:'Krunal Pandya',team:'RCB',role:'ALL'},
+  {id:'swapnil-singh',name:'Swapnil Singh',team:'RCB',role:'ALL'},
+  {id:'tim-david',name:'Tim David',team:'RCB',role:'ALL'},
+  {id:'romario-shepherd',name:'Romario Shepherd',team:'RCB',role:'ALL'},
+  {id:'jacob-bethell',name:'Jacob Bethell',team:'RCB',role:'ALL'},
+  {id:'venkatesh-iyer',name:'Venkatesh Iyer',team:'RCB',role:'ALL'},
+  {id:'satvik-deswal',name:'Satvik Deswal',team:'RCB',role:'ALL'},
+  {id:'mangesh-yadav',name:'Mangesh Yadav',team:'RCB',role:'ALL'},
+  {id:'vicky-ostwal',name:'Vicky Ostwal',team:'RCB',role:'ALL'},
+  {id:'vihaan-malhotra',name:'Vihaan Malhotra',team:'RCB',role:'ALL'},
+  {id:'kanishk-chouhan',name:'Kanishk Chouhan',team:'RCB',role:'ALL'},
+  {id:'josh-hazlewood',name:'Josh Hazlewood',team:'RCB',role:'BOWL'},
+  {id:'yash-dayal',name:'Yash Dayal',team:'RCB',role:'BOWL'},
+  {id:'rasikh-dar',name:'Rasikh Dar',team:'RCB',role:'BOWL'},
+  {id:'suyash-sharma',name:'Suyash Sharma',team:'RCB',role:'BOWL'},
+  {id:'bhuvneshwar-kumar',name:'Bhuvneshwar Kumar',team:'RCB',role:'BOWL'},
+  {id:'nuwan-thushara',name:'Nuwan Thushara',team:'RCB',role:'BOWL'},
+  {id:'abhinandan-singh',name:'Abhinandan Singh',team:'RCB',role:'BOWL'},
+  {id:'jacob-duffy',name:'Jacob Duffy',team:'RCB',role:'BOWL'},
+  {id:'ajinkya-rahane-kkr',name:'Ajinkya Rahane',team:'KKR',role:'BAT'},
+  {id:'rinku-singh',name:'Rinku Singh',team:'KKR',role:'BAT'},
+  {id:'angkrish-raghuvanshi',name:'Angkrish Raghuvanshi',team:'KKR',role:'BAT'},
+  {id:'manish-pandey',name:'Manish Pandey',team:'KKR',role:'BAT'},
+  {id:'cameron-green',name:'Cameron Green',team:'KKR',role:'BAT'},
+  {id:'finn-allen',name:'Finn Allen',team:'KKR',role:'WK-BAT'},
+  {id:'tejasvi-singh',name:'Tejasvi Singh',team:'KKR',role:'WK-BAT'},
+  {id:'rahul-tripathi',name:'Rahul Tripathi',team:'KKR',role:'BAT'},
+  {id:'tim-seifert',name:'Tim Seifert',team:'KKR',role:'WK-BAT'},
+  {id:'rovman-powell',name:'Rovman Powell',team:'KKR',role:'BAT'},
+  {id:'sunil-narine',name:'Sunil Narine',team:'KKR',role:'ALL'},
+  {id:'anukul-roy',name:'Anukul Roy',team:'KKR',role:'ALL'},
+  {id:'sarthak-ranjan',name:'Sarthak Ranjan',team:'KKR',role:'ALL'},
+  {id:'daksh-kamra',name:'Daksh Kamra',team:'KKR',role:'ALL'},
+  {id:'rachin-ravindra',name:'Rachin Ravindra',team:'KKR',role:'ALL'},
+  {id:'ramandeep-singh',name:'Ramandeep Singh',team:'KKR',role:'ALL'},
+  {id:'varun-chakravarthy',name:'Varun Chakravarthy',team:'KKR',role:'BOWL'},
+  {id:'harshit-rana',name:'Harshit Rana',team:'KKR',role:'BOWL'},
+  {id:'vaibhav-arora',name:'Vaibhav Arora',team:'KKR',role:'BOWL'},
+  {id:'matheesha-pathirana',name:'Matheesha Pathirana',team:'KKR',role:'BOWL'},
+  {id:'kartik-tyagi',name:'Kartik Tyagi',team:'KKR',role:'BOWL'},
+  {id:'prashant-solanki',name:'Prashant Solanki',team:'KKR',role:'BOWL'},
+  {id:'akash-deep',name:'Akash Deep',team:'KKR',role:'BOWL'},
+  {id:'umran-malik',name:'Umran Malik',team:'KKR',role:'BOWL'},
+  {id:'blessing-muzarabani',name:'Blessing Muzarabani',team:'KKR',role:'BOWL'},
+  {id:'tristan-stubbs',name:'Tristan Stubbs',team:'DC',role:'WK-BAT'},
+  {id:'kl-rahul',name:'KL Rahul',team:'DC',role:'WK-BAT'},
+  {id:'karun-nair',name:'Karun Nair',team:'DC',role:'BAT'},
+  {id:'david-miller',name:'David Miller',team:'DC',role:'BAT'},
+  {id:'ben-duckett',name:'Ben Duckett',team:'DC',role:'WK-BAT'},
+  {id:'pathum-nissanka',name:'Pathum Nissanka',team:'DC',role:'BAT'},
+  {id:'sahil-parakh',name:'Sahil Parakh',team:'DC',role:'BAT'},
+  {id:'prithvi-shaw',name:'Prithvi Shaw',team:'DC',role:'BAT'},
+  {id:'abishek-porel',name:'Abishek Porel',team:'DC',role:'WK-BAT'},
+  {id:'axar-patel',name:'Axar Patel',team:'DC',role:'ALL'},
+  {id:'sameer-rizvi',name:'Sameer Rizvi',team:'DC',role:'ALL'},
+  {id:'ashutosh-sharma',name:'Ashutosh Sharma',team:'DC',role:'ALL'},
+  {id:'vipraj-nigam',name:'Vipraj Nigam',team:'DC',role:'ALL'},
+  {id:'ajay-mandal',name:'Ajay Mandal',team:'DC',role:'ALL'},
+  {id:'tripurana-vijay',name:'Tripurana Vijay',team:'DC',role:'ALL'},
+  {id:'madhav-tiwari',name:'Madhav Tiwari',team:'DC',role:'ALL'},
+  {id:'auqib-dar',name:'Auqib Dar',team:'DC',role:'ALL'},
+  {id:'nitish-rana',name:'Nitish Rana',team:'DC',role:'ALL'},
+  {id:'kuldeep-yadav',name:'Kuldeep Yadav',team:'DC',role:'BOWL'},
+  {id:'mukesh-kumar',name:'Mukesh Kumar',team:'DC',role:'BOWL'},
+  {id:'mitchell-starc',name:'Mitchell Starc',team:'DC',role:'BOWL'},
+  {id:'t-natarajan',name:'T Natarajan',team:'DC',role:'BOWL'},
+  {id:'dushmantha-chameera',name:'Dushmantha Chameera',team:'DC',role:'BOWL'},
+  {id:'lungisani-ngidi',name:'Lungisani Ngidi',team:'DC',role:'BOWL'},
+  {id:'kyle-jamieson',name:'Kyle Jamieson',team:'DC',role:'BOWL'},
+  {id:'prabhsimran-singh',name:'Prabhsimran Singh',team:'PBKS',role:'WK-BAT'},
+  {id:'shreyas-iyer',name:'Shreyas Iyer',team:'PBKS',role:'BAT'},
+  {id:'nehal-wadhera',name:'Nehal Wadhera',team:'PBKS',role:'BAT'},
+  {id:'vishnu-vinod',name:'Vishnu Vinod',team:'PBKS',role:'WK-BAT'},
+  {id:'harnoor-pannu',name:'Harnoor Pannu',team:'PBKS',role:'BAT'},
+  {id:'pyla-avinash',name:'Pyla Avinash',team:'PBKS',role:'BAT'},
+  {id:'shashank-singh',name:'Shashank Singh',team:'PBKS',role:'BAT'},
+  {id:'marcus-stoinis',name:'Marcus Stoinis',team:'PBKS',role:'ALL'},
+  {id:'harpreet-brar',name:'Harpreet Brar',team:'PBKS',role:'ALL'},
+  {id:'marco-jansen',name:'Marco Jansen',team:'PBKS',role:'ALL'},
+  {id:'azmatullah-omarzai',name:'Azmatullah Omarzai',team:'PBKS',role:'ALL'},
+  {id:'priyansh-arya',name:'Priyansh Arya',team:'PBKS',role:'ALL'},
+  {id:'musheer-khan',name:'Musheer Khan',team:'PBKS',role:'ALL'},
+  {id:'suryansh-shedge',name:'Suryansh Shedge',team:'PBKS',role:'ALL'},
+  {id:'mitch-owen',name:'Mitch Owen',team:'PBKS',role:'ALL'},
+  {id:'cooper-connolly',name:'Cooper Connolly',team:'PBKS',role:'ALL'},
+  {id:'ben-dwarshuis',name:'Ben Dwarshuis',team:'PBKS',role:'ALL'},
+  {id:'arshdeep-singh',name:'Arshdeep Singh',team:'PBKS',role:'BOWL'},
+  {id:'yuzvendra-chahal',name:'Yuzvendra Chahal',team:'PBKS',role:'BOWL'},
+  {id:'vyshak-vijaykumar',name:'Vyshak Vijaykumar',team:'PBKS',role:'BOWL'},
+  {id:'yash-thakur',name:'Yash Thakur',team:'PBKS',role:'BOWL'},
+  {id:'xavier-bartlett',name:'Xavier Bartlett',team:'PBKS',role:'BOWL'},
+  {id:'pravin-dubey',name:'Pravin Dubey',team:'PBKS',role:'BOWL'},
+  {id:'vishal-nishad',name:'Vishal Nishad',team:'PBKS',role:'BOWL'},
+  {id:'lockie-ferguson',name:'Lockie Ferguson',team:'PBKS',role:'BOWL'},
+  {id:'riyan-parag',name:'Riyan Parag',team:'RR',role:'BAT'},
+  {id:'shimron-hetmyer',name:'Shimron Hetmyer',team:'RR',role:'BAT'},
+  {id:'yashasvi-jaiswal',name:'Yashasvi Jaiswal',team:'RR',role:'BAT'},
+  {id:'shubham-dubey',name:'Shubham Dubey',team:'RR',role:'BAT'},
+  {id:'vaibhav-Suryavanshi',name:'Vaibhav Suryavanshi',team:'RR',role:'BAT'},
+  {id:'donovan-ferreira',name:'Donovan Ferreira',team:'RR',role:'WK-BAT'},
+  {id:'lhuandre-pretorius',name:'Lhuan-Dre Pretorius',team:'RR',role:'BAT'},
+  {id:'ravi-singh',name:'Ravi Singh',team:'RR',role:'WK-BAT'},
+  {id:'amanrao-perala',name:'Aman Rao Perala',team:'RR',role:'BAT'},
+  {id:'dhruv-jurel',name:'Dhruv Jurel',team:'RR',role:'WK-BAT'},
+  {id:'ravindra-jadeja',name:'Ravindra Jadeja',team:'RR',role:'ALL'},
+  {id:'yudhbirsingh-charak',name:'Yudhbir Singh Charak',team:'RR',role:'ALL'},
+  {id:'sam-curran',name:'Sam Curran',team:'RR',role:'ALL'},
+  {id:'sandeep-sharma',name:'Sandeep Sharma',team:'RR',role:'BOWL'},
+  {id:'jofra-archer',name:'Jofra Archer',team:'RR',role:'BOWL'},
+  {id:'tushar-deshpande',name:'Tushar Deshpande',team:'RR',role:'BOWL'},
+  {id:'kwena-maphaka',name:'Kwena Maphaka',team:'RR',role:'BOWL'},
+  {id:'ravi-bishnoi',name:'Ravi Bishnoi',team:'RR',role:'BOWL'},
+  {id:'sushant-mishra',name:'Sushant Mishra',team:'RR',role:'BOWL'},
+  {id:'yashraj-punja',name:'Yash Raj Punja',team:'RR',role:'BOWL'},
+  {id:'adam-milne',name:'Adam Milne',team:'RR',role:'BOWL'},
+  {id:'kuldeep-sen',name:'Kuldeep Sen',team:'RR',role:'BOWL'},
+  {id:'nandre-burger',name:'Nandre Burger',team:'RR',role:'BOWL'},
+  {id:'vignesh-puthur',name:'Vignesh Puthur',team:'RR',role:'BOWL'},
+  {id:'brijesh-sharma',name:'Brijesh Sharma',team:'RR',role:'BOWL'},
+  {id:'travis-head',name:'Travis Head',team:'SRH',role:'BAT'},
+  {id:'heinrich-klaasen',name:'Heinrich Klaasen',team:'SRH',role:'WK-BAT'},
+  {id:'ishan-kishan',name:'Ishan Kishan',team:'SRH',role:'WK-BAT'},
+  {id:'abhishek-sharma',name:'Abhishek Sharma',team:'SRH',role:'BAT'},
+  {id:'aniket-verma',name:'Aniket Verma',team:'SRH',role:'BAT'},
+  {id:'smaran-ravichandran',name:'Smaran Ravichandran',team:'SRH',role:'BAT'},
+  {id:'salil-arora',name:'Salil Arora',team:'SRH',role:'WK-BAT'},
+  {id:'nitish-reddy',name:'Nitish Kumar Reddy',team:'SRH',role:'ALL'},
+  {id:'kamindu-mendis',name:'Kamindu Mendis',team:'SRH',role:'ALL'},
+  {id:'harsh-dubey',name:'Harsh Dubey',team:'SRH',role:'ALL'},
+  {id:'brydon-carse',name:'Brydon Carse',team:'SRH',role:'ALL'},
+  {id:'liam-livingstone',name:'Liam Livingstone',team:'SRH',role:'ALL'},
+  {id:'shivang-kumar',name:'Shivang Kumar',team:'SRH',role:'ALL'},
+  {id:'krains-fuletra',name:'Krains Fuletra',team:'SRH',role:'ALL'},
+  {id:'jack-edwards',name:'Jack Edwards',team:'SRH',role:'ALL'},
+  {id:'pat-cummins',name:'Pat Cummins',team:'SRH',role:'BOWL'},
+  {id:'harshal-patel',name:'Harshal Patel',team:'SRH',role:'BOWL'},
+  {id:'jaydev-unadkat',name:'Jaydev Unadkat',team:'SRH',role:'BOWL'},
+  {id:'eshan-malinga',name:'Eshan Malinga',team:'SRH',role:'BOWL'},
+  {id:'zeeshan-ansari',name:'Zeeshan Ansari',team:'SRH',role:'BOWL'},
+  {id:'shivam-mavi',name:'Shivam Mavi',team:'SRH',role:'BOWL'},
+  {id:'sakib-hussain',name:'Sakib Hussain',team:'SRH',role:'BOWL'},
+  {id:'onkar-tarmale',name:'Onkar Tarmale',team:'SRH',role:'BOWL'},
+  {id:'amit-kumar',name:'Amit Kumar',team:'SRH',role:'BOWL'},
+  {id:'praful-hinge',name:'Praful Hinge',team:'SRH',role:'BOWL'},
+  {id:'shubman-gill',name:'Shubman Gill',team:'GT',role:'BAT'},
+  {id:'jos-buttler',name:'Jos Buttler',team:'GT',role:'WK-BAT'},
+  {id:'kumar-kushagra',name:'Kumar Kushagra',team:'GT',role:'WK-BAT'},
+  {id:'glen-phillips',name:'Glen Phillips',team:'GT',role:'BAT'},
+  {id:'tom-banton',name:'Tom Banton',team:'GT',role:'WK-BAT'},
+  {id:'anuj-rawat',name:'Anuj Rawat',team:'GT',role:'WK-BAT'},
+  {id:'shahrukh-khan',name:'Shahrukh Khan',team:'GT',role:'BAT'},
+  {id:'sai-sudharsan',name:'Sai Sudharsan',team:'GT',role:'BAT'},
+  {id:'washington-sundar',name:'Washington Sundar',team:'GT',role:'ALL'},
+  {id:'jason-holder',name:'Jason Holder',team:'GT',role:'ALL'},
+  {id:'nishant-sindhu',name:'Nishant Sindhu',team:'GT',role:'ALL'},
+  {id:'mohdarshad-khan',name:'Mohd. Arshad Khan',team:'GT',role:'ALL'},
+  {id:'jayant-yadav',name:'Jayant Yadav',team:'GT',role:'ALL'},
+  {id:'rashid-khan',name:'Rashid Khan',team:'GT',role:'BOWL'},
+  {id:'kagiso-rabada',name:'Kagiso Rabada',team:'GT',role:'BOWL'},
+  {id:'mohammed-siraj',name:'Mohammed Siraj',team:'GT',role:'BOWL'},
+  {id:'prasidh-krishna',name:'Prasidh Krishna',team:'GT',role:'BOWL'},
+  {id:'ishant-sharma',name:'Ishant Sharma',team:'GT',role:'BOWL'},
+  {id:'sai-kishore',name:'Sai Kishore',team:'GT',role:'BOWL'},
+  {id:'rahul-tewatia',name:'Rahul Tewatia',team:'GT',role:'BOWL'},
+  {id:'luke-wood',name:'Luke Wood',team:'GT',role:'BOWL'},
+  {id:'manav-suthar',name:'Manav Suthar',team:'GT',role:'BOWL'},
+  {id:'gurnoor-brar',name:'Gurnoor Singh Brar',team:'GT',role:'BOWL'},
+  {id:'ashok-sharma',name:'Ashok Sharma',team:'GT',role:'BOWL'},
+  {id:'prithvi-yarra',name:'Prithvi Raj Yarra',team:'GT',role:'BOWL'},
+  {id:'nicholas-pooran',name:'Nicholas Pooran',team:'LSG',role:'WK-BAT'},
+  {id:'ayush-badoni',name:'Ayush Badoni',team:'LSG',role:'BAT'},
+  {id:'rishabh-pant',name:'Rishabh Pant',team:'LSG',role:'WK-BAT'},
+  {id:'aiden-markram',name:'Aiden Markram',team:'LSG',role:'BAT'},
+  {id:'josh-inglis',name:'Josh Inglis',team:'LSG',role:'WK-BAT'},
+  {id:'matthew-breetzke',name:'Matthew Breetzke',team:'LSG',role:'BAT'},
+  {id:'himmat-singh',name:'Himmat Singh',team:'LSG',role:'BAT'},
+  {id:'mukul-choudhary',name:'Mukul Choudhary',team:'LSG',role:'WK-BAT'},
+  {id:'akshat-raghuwanshi',name:'Akshat Raghuwanshi',team:'LSG',role:'BAT'},
+  {id:'mitchell-marsh',name:'Mitchell Marsh',team:'LSG',role:'ALL'},
+  {id:'abdul-samad',name:'Abdul Samad',team:'LSG',role:'ALL'},
+  {id:'shahbaz-ahamad',name:'Shahbaz Ahamad',team:'LSG',role:'ALL'},
+  {id:'wanindu-hasaranga',name:'Wanindu Hasaranga',team:'LSG',role:'ALL'},
+  {id:'arshin-kulkarni',name:'Arshin Kulkarni',team:'LSG',role:'ALL'},
+  {id:'mohsin-khan',name:'Mohsin Khan',team:'LSG',role:'BOWL'},
+  {id:'mohammad-shami',name:'Mohammad Shami',team:'LSG',role:'BOWL'},
+  {id:'avesh-khan',name:'Avesh Khan',team:'LSG',role:'BOWL'},
+  {id:'mayank-yadav',name:'Mayank Yadav',team:'LSG',role:'BOWL'},
+  {id:'anrich-nortje',name:'Anrich Nortje',team:'LSG',role:'BOWL'},
+  {id:'m-siddharth',name:'M. Siddharth',team:'LSG',role:'BOWL'},
+  {id:'digvesh-singh',name:'Digvesh Singh',team:'LSG',role:'BOWL'},
+  {id:'akash-singh',name:'Akash Singh',team:'LSG',role:'BOWL'},
+  {id:'prince-yadav',name:'Prince Yadav',team:'LSG',role:'BOWL'},
+  {id:'arjun-Tendulkar',name:'Arjun Tendulkar',team:'LSG',role:'BOWL'},
+  {id:'naman-tiwari',name:'Naman Tiwari',team:'LSG',role:'BOWL'},
 ];
-
-// Returns today's date string in IST as 'YYYY-MM-DD'
-function todayIST() {
-  const now = new Date();
-  // IST = UTC+5:30
-  const ist = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
-  return ist.toISOString().slice(0, 10);
-}
-
-// Returns current hour (0–23) in IST
-function hourIST() {
-  const now = new Date();
-  const ist = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
-  return ist.getUTCHours();
-}
-
-// Swap window: today must be a matchday AND current IST time must be 00:00–11:59
-function isSwapWindowOpen() {
-  const today = todayIST();
-  const hour = hourIST();
-  return MATCHDAYS.includes(today) && hour < 12;
-}
-
-// Has the current user already swapped today?
-// club.swappedOn stores the IST date string of last swap (e.g. '2026-03-29')
-function hasSwappedToday(club) {
-  return club.swappedOn === todayIST();
-}
-
-const TEAMS = [
-  {id:'CSK', name:'Chennai Super Kings'},
-  {id:'MI',  name:'Mumbai Indians'},
-  {id:'RCB', name:'Royal Challengers Bengaluru'},
-  {id:'KKR', name:'Kolkata Knight Riders'},
-  {id:'DC',  name:'Delhi Capitals'},
-  {id:'PBKS',name:'Punjab Kings'},
-  {id:'RR',  name:'Rajasthan Royals'},
-  {id:'SRH', name:'Sunrisers Hyderabad'},
-  {id:'GT',  name:'Gujarat Titans'},
-  {id:'LSG', name:'Lucknow Super Giants'},
-];
-window.TEAMS = TEAMS;
+window.PLAYERS = PLAYERS;
 
 // ─── STATE ───
 const S = {
   uid: null, name: '', clubs: [], activeCode: '',
-  logoTaps: 0, pin: '', recoveryCode: null,
-  swapPendingFrom: null,
+  playerPoints: {}, logoTaps: 0, pin: '', recoveryCode: null,
+  swapPendingOut: null,
+  editingSquad: false
 };
 
 function genRecoveryCode() {
@@ -546,27 +790,38 @@ function genRecoveryCode() {
   const seg = () => Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
   return `Kicket-${seg()}-${seg()}`;
 }
-
 function saveClubs() { localStorage.setItem('m_clubs', JSON.stringify(S.clubs)); }
 function loadClubsFromStorage() {
   const raw = localStorage.getItem('m_clubs');
   if (raw) {
     S.clubs = JSON.parse(raw);
     S.clubs.forEach(c => {
-      if (!c.slots) c.slots = {};
-      // migrate old swappedToday boolean to swappedOn date string
-      if (c.swappedToday && !c.swappedOn) c.swappedOn = todayIST();
-      delete c.swappedToday;
-      if (!c.lastMatchday) c.lastMatchday = '';
+      if (!c.allPlayers || c.allPlayers.length === 0) c.allPlayers = [...(c.squad || [])];
+      if (!c.baselines) c.baselines = {};
+      if (!c.swapsUsed) c.swapsUsed = 0;
     });
     return;
   }
   S.clubs = [];
 }
 function getActiveClub() { return S.clubs.find(c => c.code === S.activeCode) || null; }
+function getSwapsUsed(club) { return club.swapsUsed || 0; }
+function getSwapsLeft(club) { return MAX_SWAPS - getSwapsUsed(club); }
 
-function totalAssigned(slots) {
-  return Object.values(slots || {}).reduce((a,b) => a+b, 0);
+function calcScore(member) {
+  const allIds = (member.allPlayers && member.allPlayers.length > 0)
+    ? member.allPlayers
+    : (member.squad || []);
+  const baselines = member.baselines || {};
+  return allIds.reduce((tot, pid) => {
+    const pts = (S.playerPoints[pid] || 0) - (baselines[pid] || 0);
+    return tot + Math.max(0, pts);
+  }, 0);
+}
+
+function playerScore(pid, club) {
+  const baselines = club.baselines || {};
+  return Math.max(0, (S.playerPoints[pid] || 0) - (baselines[pid] || 0));
 }
 
 // ─── INIT ───
@@ -577,10 +832,10 @@ window.addEventListener('DOMContentLoaded', () => {
   S.name = localStorage.getItem('m_name') || '';
   S.recoveryCode = localStorage.getItem('m_recovery') || null;
   loadClubsFromStorage();
+  loadPlayerPoints();
   renderHome();
   go('screen-home');
   showWelcomeIfNew();
-  renderAdminList();
 });
 
 // ─── NAVIGATION ───
@@ -593,7 +848,7 @@ function go(id) {
 window.go = go;
 window.goHome = function() { renderHome(); go('screen-home'); };
 
-// ─── WELCOME ───
+// ─── WELCOME MODAL ───
 function showWelcomeIfNew() {
   if (!localStorage.getItem('kw')) {
     const el = document.getElementById('modal-welcome');
@@ -605,20 +860,18 @@ function showWelcomeIfNew() {
 }
 window.closeWelcome = function() {
   localStorage.setItem('kw', '1');
-  const el = document.getElementById('modal-welcome');
-  el.classList.remove('active');
-  setTimeout(() => { el.style.display = 'none'; }, 400);
+  closeModal('modal-welcome');
 };
 
 // ─── HOME ───
 function renderHome() {
   const actionsEl = document.getElementById('homeActions');
-  if (isLocked()) {
+  if (isSquadLocked()) {
     actionsEl.innerHTML = `
       <div style="background:var(--accent-light);border:1.5px solid rgba(45,106,45,0.2);border-radius:var(--r);padding:20px 18px;margin-bottom:8px;text-align:center">
         <div style="font-size:20px;margin-bottom:8px">🏏</div>
         <div style="font-family:'Abril Fatface',cursive;font-size:16px;color:var(--accent);margin-bottom:6px">Kicket is mid-season</div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.7">Join us next time.</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7">Join us next tournament!</div>
       </div>
       <button class="btn-ghost" onclick="go('screen-recover')">Recover my Account</button>`;
   } else {
@@ -633,10 +886,10 @@ function renderHome() {
     return;
   }
   el.innerHTML = S.clubs.map(c => {
-    const assigned = totalAssigned(c.slots);
-    const meta = !isLocked()
-      ? `${assigned}/11 slots assigned`
-      : `🔒 Locked · ${assigned} slots active`;
+    let meta = '';
+    if (!isSquadLocked()) meta = `${(c.squad||[]).length}/11 players selected`;
+    else if (getSwapsLeft(c) > 0) meta = `🔒 Locked · ${getSwapsLeft(c)} swaps left`;
+    else meta = '🔒 Locked · No swaps left';
     return `<div class="club-card" onclick="enterClubhouse('${c.code}')">
       <div><div class="club-card-name">${c.name}</div><div class="club-card-meta">${c.code} · ${meta}</div></div>
       <div class="club-card-arrow">›</div>
@@ -661,8 +914,8 @@ window.createClubhouse = function() {
   const code = genCode();
   const {db,ref,set} = window._db;
   set(ref(db, `kicket/clubs/${code}`), {name, by: S.uid, at: Date.now()});
-  set(ref(db, `kicket/clubs/${code}/members/${S.uid}`), {name: S.name, at: Date.now(), slots: {}, score: 0});
-  S.clubs.push({code, name, slots:{}, swappedOn:'', lastMatchday:'', score:0});
+  set(ref(db, `kicket/clubs/${code}/members/${S.uid}`), {name: S.name, at: Date.now(), squad: [], allPlayers: [], baselines: {}, swapsUsed: 0});
+  S.clubs.push({code, name, squad:[], allPlayers:[], baselines:{}, swapsUsed:0});
   saveClubs();
   document.getElementById('displayCode').textContent = code;
   S.activeCode = code;
@@ -671,7 +924,7 @@ window.createClubhouse = function() {
 
 window.shareInvite = function() {
   const club = getActiveClub();
-  const txt = `Join my IPL 2026 Clubhouse on Kicket.\n\nCode: ${club.code}\n\nhttps://playkicket.github.io`;
+  const txt = `Join my IPL 2026 Clubhouse on Kicket!\n\nClubhouse: ${club.name}\nCode: ${club.code}\n\nhttps://playkicket.github.io\n\nNo money. No registration. Just cricket.`;
   if (navigator.share) navigator.share({title:'Kicket — Join my Clubhouse', text:txt});
   else navigator.clipboard.writeText(txt).then(() => toast('Invite copied!'));
 };
@@ -684,12 +937,12 @@ window.joinClubhouse = function() {
   get(ref(db, `kicket/clubs/${code}`)).then(snap => {
     if (snap.exists()) {
       const name = snap.val().name;
-      S.clubs.push({code, name, slots:{}, swappedOn:'', lastMatchday:'', score:0});
+      S.clubs.push({code, name, squad:[], allPlayers:[], baselines:{}, swapsUsed:0});
       saveClubs();
       S.activeCode = code;
       if (!S.name) { localStorage.setItem('m_pending_join', code); go('screen-name'); return; }
       const {db,ref,set} = window._db;
-      set(ref(db, `kicket/clubs/${code}/members/${S.uid}`), {name: S.name, at: Date.now(), slots: {}, score: 0});
+      set(ref(db, `kicket/clubs/${code}/members/${S.uid}`), {name: S.name, at: Date.now(), squad: [], allPlayers: [], baselines: {}, swapsUsed: 0});
       if (!S.recoveryCode) {
         const rc = genRecoveryCode();
         S.recoveryCode = rc;
@@ -730,7 +983,7 @@ window.saveName = function() {
     const club = S.clubs.find(c => c.code === pendingJoin);
     if (club) {
       const {db,ref,set} = window._db;
-      set(ref(db, `kicket/clubs/${pendingJoin}/members/${S.uid}`), {name, at: Date.now(), slots: {}, score: 0});
+      set(ref(db, `kicket/clubs/${pendingJoin}/members/${S.uid}`), {name, at: Date.now(), squad: [], allPlayers: [], swapsUsed: 0});
       S.activeCode = pendingJoin;
       showRecoveryCode(() => openDash());
       return;
@@ -739,7 +992,7 @@ window.saveName = function() {
   const club = getActiveClub();
   if (club) {
     const {db,ref,set} = window._db;
-    set(ref(db, `kicket/clubs/${club.code}/members/${S.uid}`), {name, at: Date.now(), slots: club.slots || {}, score: club.score || 0});
+    set(ref(db, `kicket/clubs/${club.code}/members/${S.uid}`), {name, at: Date.now(), squad: club.squad, allPlayers: club.allPlayers || club.squad, swapsUsed: club.swapsUsed || 0});
     showRecoveryCode(() => openDash());
   } else {
     showRecoveryCode(() => { renderHome(); go('screen-home'); });
@@ -758,7 +1011,7 @@ window.afterRecoveryCode = function() {
   else { renderHome(); go('screen-home'); }
 };
 
-// ─── RECOVER ───
+// ─── RECOVER ACCOUNT ───
 window.recoverAccount = function() {
   const code = document.getElementById('recoverCodeInput').value.trim();
   if (!code) { toast('Please enter your recovery code'); return; }
@@ -779,10 +1032,10 @@ window.recoverAccount = function() {
           const member = club.members[data.uid];
           restored.push({
             code, name: club.name,
-            slots: member.slots || {},
-            score: member.score || 0,
-            swappedOn: member.swappedOn || '',
-            lastMatchday: member.lastMatchday || ''
+            squad: member.squad || [],
+            allPlayers: member.allPlayers && member.allPlayers.length > 0 ? member.allPlayers : (member.squad || []),
+            swapsUsed: member.swapsUsed || 0,
+            baselines: member.baselines || {}
           });
         }
       });
@@ -799,221 +1052,132 @@ function openDash() {
   go('screen-dashboard');
   document.getElementById('dashName').textContent = club.name;
   document.getElementById('dashSub').textContent = `${S.name} · ${club.code}`;
+  S.editingSquad = false;
   switchTab('squad');
-  renderSlotPanel();
+  renderSquadPanel();
   loadLb();
 }
 window.openDash = openDash;
 
-// ─── SLOT PANEL ───
-function renderSlotPanel() {
+function renderSquadPanel() {
   const club = getActiveClub();
   if (!club) return;
-  const locked = isLocked();
+  const locked = isSquadLocked();
+  const swapOpen = isSwapOpen();
+  const swapsLeft = getSwapsLeft(club);
+  const hasSavedSquad = club.squad && club.squad.length === 11;
 
   if (!locked) {
-    document.getElementById('selectorPanel').style.display = 'block';
-    document.getElementById('squadPanel').style.display = 'none';
-    renderTeamSlotList();
+    if (hasSavedSquad && !S.editingSquad) {
+      document.getElementById('selectorPanel').style.display = 'none';
+      document.getElementById('swapSelectorWrap').style.display = 'none';
+      S.swapPendingOut = null;
+      document.getElementById('swapBanner').innerHTML = `<div class="swap-banner open" style="background:var(--accent-light);border-color:rgba(45,106,45,0.2)">
+        <div><div class="swap-banner-text" style="color:var(--accent)">Squad saved ✓</div><div class="swap-banner-sub">Squads lock on March 28 at noon. You can still edit.</div></div>
+        <button class="btn btn-secondary" style="width:auto;padding:8px 14px;font-size:12px;white-space:nowrap" onclick="editSquad()">Edit Squad</button>
+      </div>`;
+      document.getElementById('squadPanel').style.display = 'block';
+      showSquad(false);
+    } else {
+      document.getElementById('selectorPanel').style.display = 'block';
+      document.getElementById('squadPanel').style.display = 'none';
+      document.getElementById('selCount').textContent = club.squad.length;
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.textContent = 'Save My Squad';
+      saveBtn.disabled = club.squad.length !== 11;
+      if (document.getElementById('teamDrop').value) window.loadTeam();
+    }
   } else {
     document.getElementById('selectorPanel').style.display = 'none';
+    S.swapPendingOut = null;
+    S.editingSquad = false;
+    document.getElementById('swapSelectorWrap').style.display = 'none';
+    renderSwapBanner(club, swapOpen, swapsLeft);
     document.getElementById('squadPanel').style.display = 'block';
-    renderSwapBanner(club);
-    renderTeamGrid();
+    showSquad();
   }
 }
 
-// ─── PRE-LOCK: pane grid allocation ───
-function renderTeamSlotList() {
-  const club = getActiveClub();
-  if (!club) return;
-  const slots = club.slots || {};
-  const assigned = totalAssigned(slots);
-  const remaining = TOTAL_SLOTS - assigned;
-  document.getElementById('slotsLeft').textContent = remaining;
-
-  const saveBtn = document.getElementById('saveBtn');
-  const alreadySaved = assigned === TOTAL_SLOTS && club._saved;
-  saveBtn.disabled = remaining !== 0;
-  saveBtn.textContent = alreadySaved ? 'Edit picks' : 'Save picks';
-
-  document.getElementById('teamSlotList').innerHTML = `<div class="team-pane-grid">` +
-    TEAMS.map(t => {
-      const count = slots[t.id] || 0;
-      const canAdd = remaining > 0;
-      const canRemove = count > 0;
-      return `<div class="team-pane ${count > 0 ? 'has-slots' : ''}">
-        <div class="team-pane-name">${t.name}</div>
-        <div class="team-pane-abbr">(${t.id})</div>
-        <div class="team-pane-controls">
-          <button class="slot-btn" onclick="adjustSlot('${t.id}',-1)" ${canRemove?'':'disabled'}>−</button>
-          <div class="slot-count">${count}</div>
-          <button class="slot-btn" onclick="adjustSlot('${t.id}',1)" ${canAdd?'':'disabled'}>+</button>
-        </div>
-      </div>`;
-    }).join('') +
-  `</div>`;
-}
-
-window.adjustSlot = function(teamId, delta) {
-  const club = getActiveClub();
-  if (!club) return;
-  if (!club.slots) club.slots = {};
-  const current = club.slots[teamId] || 0;
-  const assigned = totalAssigned(club.slots);
-  if (delta > 0 && assigned >= TOTAL_SLOTS) { toast('All 11 slots assigned!'); return; }
-  if (delta < 0 && current <= 0) return;
-  club.slots[teamId] = current + delta;
-  if (club.slots[teamId] === 0) delete club.slots[teamId];
-  club._saved = false;
-  saveClubs();
-  renderTeamSlotList();
-  updateScore();
+window.editSquad = function() {
+  S.editingSquad = true;
+  S.swapPendingOut = null;
+  document.getElementById('selectorPanel').style.display = 'none';
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  document.getElementById('swapBanner').innerHTML = `<div class="swap-banner open" style="background:var(--accent-light);border-color:rgba(45,106,45,0.2)">
+    <div><div class="swap-banner-text" style="color:var(--accent)">Editing Squad</div><div class="swap-banner-sub">Tap a player to replace them. No limit before March 28.</div></div>
+    <button class="btn btn-secondary" style="width:auto;padding:8px 14px;font-size:12px;white-space:nowrap" onclick="cancelEdit()">Done</button>
+  </div>`;
+  document.getElementById('squadPanel').style.display = 'block';
+  showSquad(false, true);
 };
 
-window.saveAllocation = function() {
-  const club = getActiveClub();
-  if (!club) return;
-  const assigned = totalAssigned(club.slots);
-  if (assigned !== TOTAL_SLOTS) { toast('Assign all 11 slots first'); return; }
-  club._saved = true;
-  saveClubs();
-  const {db,ref,update} = window._db;
-  update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {slots: club.slots, score: club.score || 0});
-  toast('Allocation saved! ✓ You can still change it before March 28.');
-  renderTeamSlotList();
-};
-
-// ─── POST-LOCK: team grid ───
-function renderTeamGrid() {
-  const club = getActiveClub();
-  if (!club) return;
-  const slots = club.slots || {};
-  const swapOpen = isSwapWindowOpen();
-  const alreadySwapped = hasSwappedToday(club);
-  const canSwap = swapOpen && !alreadySwapped && !S.swapPendingFrom;
-
-  document.getElementById('teamGrid').innerHTML = TEAMS.map(t => {
-    const count = slots[t.id] || 0;
-    const isTarget = S.swapPendingFrom && S.swapPendingFrom !== t.id;
-    let cls = 'team-card';
-    if (count === 0 && !isTarget) cls += ' no-slots';
-    if (canSwap && count > 0) cls += ' swappable';
-    if (isTarget) cls += ' swappable';
-    const hint = canSwap && count > 0 ? 'TAP TO SWAP' : '';
-    const clickFn = canSwap && count > 0 ? `startSwap('${t.id}')` : (isTarget ? `confirmSwap('${t.id}')` : '');
-
-    return `<div class="${cls}" onclick="${clickFn}">
-      <div class="team-card-name" style="font-size:16px">${t.id}</div>
-      <div class="team-card-slots">${count}</div>
-      ${hint ? `<div class="team-card-swap-hint">${hint}</div>` : ''}
-    </div>`;
-  }).join('');
-}
-
-function renderSwapBanner(club) {
+function renderSwapBanner(club, swapOpen, swapsLeft) {
   const banner = document.getElementById('swapBanner');
-  const swapOpen = isSwapWindowOpen();
-  const alreadySwapped = hasSwappedToday(club);
-  const today = todayIST();
-  const isMatchday = MATCHDAYS.includes(today);
-  const hour = hourIST();
-
-  if (alreadySwapped) {
-    // Used swap today
-    banner.innerHTML = `<div class="swap-banner used">
-      <div><div class="swap-banner-text" style="color:var(--danger)">Swap used today</div>
-      <div class="swap-banner-sub">Next swap available between 12:00 AM–12:00 PM IST on the next match day.</div></div>
-    </div>`;
-  } else if (swapOpen) {
-    // Window is open right now
-    banner.innerHTML = `<div class="swap-banner open">
-      <div><div class="swap-banner-text" style="color:var(--warning)">Swap window open until 12:00 PM IST</div>
-      <div class="swap-banner-sub">Tap a team card to swap 1 pick</div></div>
-    </div>`;
-  } else if (isMatchday && hour >= 12) {
-    // Match day but window closed (after noon)
+  const dots = Array.from({length: MAX_SWAPS}, (_,i) =>
+    `<div class="swap-dot ${i >= swapsLeft ? 'used' : ''}"></div>`).join('');
+  if (!swapOpen) {
     banner.innerHTML = `<div class="swap-banner locked">
-      <div><div class="swap-banner-text" style="color:var(--text2)">Swap window closed</div>
-      <div class="swap-banner-sub">Next swap available between 12:00 AM–12:00 PM IST on the next match day.</div></div>
+      <div><div class="swap-banner-text">🔒 Squad Locked</div><div class="swap-banner-sub">Squads locked from March 28 for IPL 2026</div></div>
+      <div class="swap-dots">${dots}</div>
+    </div>`;
+  } else if (swapsLeft === 0) {
+    banner.innerHTML = `<div class="swap-banner exhausted">
+      <div><div class="swap-banner-text" style="color:var(--danger)">No swaps remaining</div><div class="swap-banner-sub">You've used all 3 lifetime swaps</div></div>
+      <div class="swap-dots">${dots}</div>
     </div>`;
   } else {
-    // Not a match day
-    banner.innerHTML = `<div class="swap-banner locked">
-      <div><div class="swap-banner-text" style="color:var(--text2)">Swap window closed</div>
-      <div class="swap-banner-sub">Next swap available between 12:00 AM–12:00 PM IST on the next match day.</div></div>
+    banner.innerHTML = `<div class="swap-banner open">
+      <div><div class="swap-banner-text" style="color:var(--warning)">${swapsLeft} swap${swapsLeft>1?'s':''} remaining</div><div class="swap-banner-sub">Tap a player card to swap them out</div></div>
+      <div class="swap-dots">${dots}</div>
     </div>`;
   }
 }
 
-// ─── SWAP FLOW ───
-window.startSwap = function(teamId) {
-  const club = getActiveClub();
-  if (!club) return;
-  if (!isSwapWindowOpen()) { toast('Swap window is closed. Opens midnight–noon IST on match days.'); return; }
-  if (hasSwappedToday(club)) { toast('You have already swapped today'); return; }
-  S.swapPendingFrom = teamId;
-  const team = TEAMS.find(t => t.id === teamId);
-  toast(`Moving 1 slot from ${team ? team.name : teamId}. Pick target team.`);
-  renderTeamGrid();
-  document.getElementById('swapTargetWrap').style.display = 'block';
-  document.getElementById('swapTargetList').innerHTML = TEAMS
-    .filter(t => t.id !== teamId)
-    .map(t => `<div class="team-slot-row" style="cursor:pointer" onclick="confirmSwap('${t.id}')">
-      <div>
-        <div class="team-name">${t.name}</div>
-        <div class="team-abbr">${t.id} · ${club.slots[t.id] || 0} slots currently</div>
-      </div>
-      <div style="font-size:20px;color:var(--accent)">+</div>
-    </div>`).join('');
-};
+function getRank(entries, idx) {
+  return entries.filter(e => e.score > entries[idx].score).length + 1;
+}
 
-window.confirmSwap = function(toTeamId) {
-  const club = getActiveClub();
-  if (!club || !S.swapPendingFrom) return;
-  if (!isSwapWindowOpen()) { toast('Swap window closed while you were deciding!'); cancelSwap(); return; }
-  const fromTeamId = S.swapPendingFrom;
-  if (!club.slots) club.slots = {};
-  const fromCount = club.slots[fromTeamId] || 0;
-  if (fromCount <= 0) { toast('No slots to move from that team'); cancelSwap(); return; }
-
-  club.slots[fromTeamId] = fromCount - 1;
-  if (club.slots[fromTeamId] === 0) delete club.slots[fromTeamId];
-  club.slots[toTeamId] = (club.slots[toTeamId] || 0) + 1;
-  club.swappedOn = todayIST();   // store the date, not a boolean
-
-  saveClubs();
-  const {db,ref,update} = window._db;
-  update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {
-    slots: club.slots,
-    swappedOn: club.swappedOn
+function loadPlayerPoints() {
+  const {db,ref,onValue,get} = window._db;
+  onValue(ref(db,'kicket/playerPoints'), snap => {
+    S.playerPoints = snap.exists() ? snap.val() : {};
+    const club = getActiveClub();
+    if (club) {
+      updateScore();
+      showSquad();
+      const lbList = document.getElementById('lbList');
+      if (lbList) {
+        get(ref(db,`kicket/clubs/${S.activeCode}/members`)).then(membSnap => {
+          if (!membSnap.exists()) return;
+          const members = membSnap.val();
+          const entries = Object.entries(members)
+            .map(([uid,m]) => ({uid, name:m.name, score: calcScore(m)}))
+            .sort((a,b) => b.score - a.score);
+          const myIdx = entries.findIndex(e => e.uid === S.uid);
+          document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+getRank(entries, myIdx) : '#—';
+          document.getElementById('topScore').textContent = entries[0] ? entries[0].score.toFixed(1) : '0';
+          lbList.innerHTML = entries.map((e,i) => {
+            const rank = getRank(entries, i);
+            const medal = rank===1?'🏆':rank===2?'🥈':rank===3?'🥉':rank;
+            return `<div class="lb-row ${e.uid===S.uid?'you':''}">
+              <div class="lb-rank">${medal}</div>
+              <div class="lb-name">${e.name}${e.uid===S.uid?' (You)':''}</div>
+              <div class="lb-score">${e.score.toFixed(1)}</div>
+            </div>`;
+          }).join('');
+        });
+      }
+    }
+    renderHome();
   });
+}
 
-  S.swapPendingFrom = null;
-  document.getElementById('swapTargetWrap').style.display = 'none';
-  renderSwapBanner(club);
-  renderTeamGrid();
-  updateScore();
-
-  const fromName = TEAMS.find(t=>t.id===fromTeamId)?.name || fromTeamId;
-  const toName = TEAMS.find(t=>t.id===toTeamId)?.name || toTeamId;
-  toast(`✓ 1 slot moved from ${fromName} → ${toName}`);
-};
-
-window.cancelSwap = function() {
-  S.swapPendingFrom = null;
-  document.getElementById('swapTargetWrap').style.display = 'none';
-  renderTeamGrid();
-};
-
-// ─── SCORE ───
 function updateScore() {
   const club = getActiveClub();
   if (!club) return;
-  document.getElementById('myScore').textContent = (club.score || 0);
+  document.getElementById('myScore').textContent = calcScore(club).toFixed(1);
 }
 
-// ─── LEADERBOARD ───
 function loadLb() {
   const club = getActiveClub();
   if (!club) return;
@@ -1021,129 +1185,205 @@ function loadLb() {
   onValue(ref(db,`kicket/clubs/${club.code}/members`), snap => {
     const members = snap.exists() ? snap.val() : {};
     const entries = Object.entries(members)
-      .map(([uid,m]) => ({uid, name:m.name, score: m.score || 0}))
+      .map(([uid,m]) => ({uid, name:m.name, score: calcScore(m)}))
       .sort((a,b) => b.score - a.score);
     const myIdx = entries.findIndex(e => e.uid === S.uid);
-    const getRank = (idx) => entries.filter(e => e.score > entries[idx].score).length + 1;
-    document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+getRank(myIdx) : '#—';
-    document.getElementById('topScore').textContent = entries[0] ? entries[0].score : '0';
-    if (myIdx >= 0) {
-      const localClub = getActiveClub();
-      if (localClub) {
-        localClub.score = entries[myIdx].score;
-        saveClubs();
-        document.getElementById('myScore').textContent = localClub.score;
-      }
-    }
+    document.getElementById('myRank').textContent = myIdx >= 0 ? '#'+getRank(entries, myIdx) : '#—';
+    document.getElementById('topScore').textContent = entries[0] ? entries[0].score.toFixed(1) : '0';
+    updateScore();
     document.getElementById('lbList').innerHTML = entries.map((e,i) => {
-      const rank = entries.filter(x => x.score > e.score).length + 1;
+      const rank = getRank(entries, i);
       const medal = rank===1?'🏆':rank===2?'🥈':rank===3?'🥉':rank;
       return `<div class="lb-row ${e.uid===S.uid?'you':''}">
         <div class="lb-rank">${medal}</div>
         <div class="lb-name">${e.name}${e.uid===S.uid?' (You)':''}</div>
-        <div class="lb-score">${e.score}</div>
+        <div class="lb-score">${e.score.toFixed(1)}</div>
       </div>`;
     }).join('');
   });
 }
 
-// ─── ADMIN ───
-function renderAdminList() {
-  document.getElementById('admList').innerHTML = TEAMS.map(t => `
-    <div class="adm-team-row">
-      <div class="adm-team-name">${t.name} <span style="color:var(--text3);font-size:11px">${t.id}</span></div>
-      <button class="toggle" id="adm_${t.id}" onclick="this.classList.toggle('on')"></button>
-    </div>`).join('');
+window.loadTeam = function() {
+  const club = getActiveClub();
+  if (!club) return;
+  const team = document.getElementById('teamDrop').value;
+  const list = document.getElementById('plList');
+  if (!team) { list.innerHTML=''; return; }
+  list.innerHTML = PLAYERS.filter(p => p.team===team).map(p => {
+    const sel = club.squad.includes(p.id);
+    const dis = !sel && club.squad.length >= 11;
+    return `<div class="pl-row ${sel?'selected':''} ${dis?'disabled':''}" onclick="togglePl('${p.id}')">
+      <div><div class="pl-name">${p.name}</div><div class="pl-meta">${p.team} · ${p.role}</div></div>
+      <div class="pl-check">${sel?'✓':''}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('selCount').textContent = club.squad.length;
+  document.getElementById('saveBtn').disabled = club.squad.length !== 11;
+};
+
+window.togglePl = function(pid) {
+  const club = getActiveClub();
+  if (!club) return;
+  const i = club.squad.indexOf(pid);
+  if (i >= 0) club.squad.splice(i,1);
+  else {
+    if (club.squad.length >= 11) { toast('You can only pick 11 players'); return; }
+    club.squad.push(pid);
+  }
+  saveClubs(); window.loadTeam();
+};
+
+window.saveSquad = function() {
+  const club = getActiveClub();
+  if (!club || club.squad.length !== 11) { toast('Pick exactly 11 players first'); return; }
+  club.allPlayers = [...new Set([...(club.allPlayers||[]), ...club.squad])];
+  saveClubs();
+  const {db,ref,update} = window._db;
+  update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {squad: club.squad, allPlayers: club.allPlayers, swapsUsed: club.swapsUsed || 0});
+  S.editingSquad = false;
+  renderSquadPanel();
+  toast('Squad saved! ✓ You can still change it before March 28.');
+};
+
+function showSquad(allowSwap = true, editMode = false) {
+  const club = getActiveClub();
+  if (!club) return;
+  if (document.getElementById('squadPanel').style.display === 'none') return;
+  const swapOpen = isSwapOpen();
+  const swapsLeft = getSwapsLeft(club);
+  const canSwap = allowSwap && swapOpen && swapsLeft > 0 && !S.swapPendingOut;
+  const canEdit = editMode && !S.swapPendingOut;
+  document.getElementById('sqGrid').innerHTML = club.squad.map(pid => {
+    const p = PLAYERS.find(x => x.id===pid);
+    const pts = playerScore(pid, club).toFixed(1);
+    const isOut = S.swapPendingOut === pid;
+    const tappable = canSwap || canEdit;
+    const hint = canEdit ? 'TAP TO REPLACE' : canSwap ? 'TAP TO SWAP' : '';
+    const clickFn = canEdit ? `startEdit('${pid}')` : canSwap ? `startSwap('${pid}')` : '';
+    return `<div class="sq-card ${tappable?'swappable':''} ${isOut?'being-removed':''}"
+      onclick="${clickFn}">
+      <div class="sq-card-name">${p?p.name:pid}</div>
+      <div class="sq-card-team">${p?p.team:''}</div>
+      <div class="sq-card-pts">${pts}</div>
+      ${tappable ? `<div class="sq-card-swap-hint">${hint}</div>` : ''}
+    </div>`;
+  }).join('');
 }
 
-window.addMatchPoints = function() {
-  const winners = TEAMS.filter(t => document.getElementById('adm_'+t.id)?.classList.contains('on')).map(t => t.id);
-  if (winners.length === 0) { toast('No teams marked as winners'); return; }
+window.startEdit = function(pid) {
+  S.swapPendingOut = pid;
+  const p = PLAYERS.find(x => x.id===pid);
+  document.getElementById('swapSelectorWrap').style.display = 'block';
+  document.getElementById('sqGrid').style.display = 'none';
+  document.getElementById('swapTeamDrop').value = '';
+  document.getElementById('swapPlList').innerHTML = '';
+  window.scrollTo(0,0);
+  toast(`Replacing ${p ? p.name : pid}. Pick new player below.`);
+};
 
-  const {db,ref,get,update} = window._db;
+window.confirmEdit = function(newPid) {
+  const club = getActiveClub();
+  if (!club || !S.swapPendingOut) return;
+  const outPid = S.swapPendingOut;
+  const outPlayer = PLAYERS.find(x => x.id===outPid);
+  const inPlayer  = PLAYERS.find(x => x.id===newPid);
+  const idx = club.squad.indexOf(outPid);
+  if (idx < 0) return;
+  club.squad[idx] = newPid;
+  club.allPlayers = [...new Set([...(club.allPlayers||[]), ...club.squad, outPid])];
+  club.baselines = club.baselines || {};
+  club.baselines[newPid] = S.playerPoints[newPid] || 0;
+  saveClubs();
+  const {db,ref,update} = window._db;
+  update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {
+    squad: club.squad, allPlayers: club.allPlayers, swapsUsed: club.swapsUsed || 0, baselines: club.baselines
+  });
+  S.swapPendingOut = null;
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  document.getElementById('sqGrid').style.display = 'grid';
+  window.editSquad();
+  toast(`✓ ${outPlayer?outPlayer.name:outPid} → ${inPlayer?inPlayer.name:newPid}`);
+};
 
-  get(ref(db,'kicket/clubs')).then(clubsSnap => {
-    if (!clubsSnap.exists()) { toast('No clubs found'); return; }
-    const allClubs = clubsSnap.val();
-    const updates = {};
+window.startSwap = function(pid) {
+  const club = getActiveClub();
+  if (!club || !isSwapOpen() || getSwapsLeft(club) <= 0) return;
+  S.swapPendingOut = pid;
+  const p = PLAYERS.find(x => x.id===pid);
+  document.getElementById('swapSelectorWrap').style.display = 'block';
+  document.getElementById('sqGrid').style.display = 'none';
+  document.getElementById('swapTeamDrop').value = '';
+  document.getElementById('swapPlList').innerHTML = '';
+  window.scrollTo(0, 0);
+  toast(`Swapping out ${p ? p.name : pid}. Pick replacement below.`);
+};
 
-    get(ref(db,'kicket/streaks')).then(streakSnap => {
-      const streaks = streakSnap.exists() ? streakSnap.val() : {};
+window.loadSwapTeam = function() {
+  const club = getActiveClub();
+  if (!club || !S.swapPendingOut) return;
+  const team = document.getElementById('swapTeamDrop').value;
+  if (!team) { document.getElementById('swapPlList').innerHTML=''; return; }
+  const confirmFn = S.editingSquad ? 'confirmEdit' : 'confirmSwap';
+  document.getElementById('swapPlList').innerHTML = PLAYERS
+    .filter(p => p.team === team && !club.squad.includes(p.id))
+    .map(p => `<div class="pl-row" onclick="${confirmFn}('${p.id}')">
+      <div><div class="pl-name">${p.name}</div><div class="pl-meta">${p.team} · ${p.role}</div></div>
+      <div class="pl-check">+</div>
+    </div>`).join('');
+};
 
-      const newStreaks = {...streaks};
-      TEAMS.forEach(t => {
-        if (winners.includes(t.id)) {
-          newStreaks[t.id] = (newStreaks[t.id] || 0) + 1;
-        } else {
-          newStreaks[t.id] = 0;
-        }
-      });
+window.confirmSwap = function(newPid) {
+  const club = getActiveClub();
+  if (!club || !S.swapPendingOut) return;
+  const outPid = S.swapPendingOut;
+  const outPlayer = PLAYERS.find(x => x.id===outPid);
+  const inPlayer  = PLAYERS.find(x => x.id===newPid);
+  const idx = club.squad.indexOf(outPid);
+  if (idx < 0) return;
+  club.squad[idx] = newPid;
+  club.allPlayers = [...new Set([...(club.allPlayers||[]), ...club.squad, outPid])];
+  club.swapsUsed = (club.swapsUsed || 0) + 1;
+  club.baselines = club.baselines || {};
+  club.baselines[newPid] = S.playerPoints[newPid] || 0;
+  saveClubs();
+  const {db,ref,update} = window._db;
+  update(ref(db,`kicket/clubs/${club.code}/members/${S.uid}`), {
+    squad: club.squad,
+    allPlayers: club.allPlayers,
+    swapsUsed: club.swapsUsed,
+    baselines: club.baselines
+  });
+  S.swapPendingOut = null;
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  document.getElementById('sqGrid').style.display = 'grid';
+  renderSwapBanner(club, isSwapOpen(), getSwapsLeft(club));
+  showSquad();
+  updateScore();
+  renderHome();
+  toast(`✓ ${outPlayer?outPlayer.name:outPid} → ${inPlayer?inPlayer.name:newPid}. ${getSwapsLeft(club)} swap${getSwapsLeft(club)!==1?'s':''} left.`);
+};
 
-      const teamPts = {};
-      winners.forEach(tid => {
-        const streak = newStreaks[tid];
-        teamPts[tid] = BASE_PTS + (streak - 1) * STREAK_BONUS;
-      });
+window.cancelEdit = function() {
+  S.editingSquad = false;
+  S.swapPendingOut = null;
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  renderSquadPanel();
+};
 
-      Object.entries(allClubs).forEach(([clubCode, club]) => {
-        if (!club.members) return;
-        Object.entries(club.members).forEach(([uid, member]) => {
-          const slots = member.slots || {};
-          let matchPts = 0;
-          winners.forEach(tid => {
-            const memberSlots = slots[tid] || 0;
-            matchPts += memberSlots * teamPts[tid];
-          });
-          if (matchPts > 0) {
-            const newScore = (member.score || 0) + matchPts;
-            updates[`kicket/clubs/${clubCode}/members/${uid}/score`] = newScore;
-          }
-          // Note: swappedOn is NOT reset by admin anymore — it resets naturally by date
-        });
-      });
+window.cancelSwap = function() {
+  S.swapPendingOut = null;
+  document.getElementById('swapSelectorWrap').style.display = 'none';
+  document.getElementById('sqGrid').style.display = 'grid';
+  if (S.editingSquad) { window.editSquad(); } else { showSquad(); }
+};
 
-      updates['kicket/streaks'] = newStreaks;
-
-      update(ref(db,'/'), updates).then(() => {
-        TEAMS.forEach(t => document.getElementById('adm_'+t.id)?.classList.remove('on'));
-        const streakMsg = winners.map(tid => {
-          const s = newStreaks[tid];
-          return s > 1 ? `${tid}🔥${s}` : tid;
-        }).join(', ');
-        toast(`Points added! Winners: ${streakMsg}`);
-        closeModal('modal-admin');
-        const club = getActiveClub();
-        if (club) { renderSlotPanel(); loadLb(); }
-      });
-    });
+window.switchTab = function(tab) {
+  ['squad','lb'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('panel-'+t).style.display = t===tab ? 'block' : 'none';
   });
 };
 
-window.confirmReset = function() {
-  if (confirm('Reset ALL points and streaks to zero? Cannot be undone.')) {
-    const {db,ref,get,update} = window._db;
-    get(ref(db,'kicket/clubs')).then(snap => {
-      if (!snap.exists()) return;
-      const allClubs = snap.val();
-      const updates = {};
-      Object.entries(allClubs).forEach(([code,club]) => {
-        if (!club.members) return;
-        Object.entries(club.members).forEach(([uid]) => {
-          updates[`kicket/clubs/${code}/members/${uid}/score`] = 0;
-        });
-      });
-      updates['kicket/streaks'] = null;
-      update(ref(db,'/'), updates).then(() => {
-        S.clubs.forEach(c => { c.score = 0; });
-        saveClubs();
-        toast('All points and streaks reset!');
-        closeModal('modal-admin');
-      });
-    });
-  }
-};
-
-// ─── SHARE ───
 window.shareLeaderboard = function() {
   const club = getActiveClub();
   const rows = document.querySelectorAll('#lbList .lb-row');
@@ -1154,20 +1394,11 @@ window.shareLeaderboard = function() {
     const isTop = rankEl.includes('🏆');
     txt += `${rankNum}. ${row.querySelector('.lb-name').textContent} — ${row.querySelector('.lb-score').textContent} pts${isTop ? ' 🏆' : ''}\n`;
   });
-  txt += `\nplaykicket.github.io · Family. Friends. Fun.`;
+  txt += `\nplaykicket.github.io · Family. Friends. Cricket.`;
   if (navigator.share) navigator.share({title:'Kicket Leaderboard', text:txt});
   else navigator.clipboard.writeText(txt).then(() => toast('Leaderboard copied!'));
 };
 
-// ─── TABS ───
-window.switchTab = function(tab) {
-  ['squad','lb'].forEach(t => {
-    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
-    document.getElementById('panel-'+t).style.display = t===tab ? 'block' : 'none';
-  });
-};
-
-// ─── MODALS ───
 window.openModal  = function(id) { document.getElementById(id).classList.add('active'); };
 window.closeModal = function(id) {
   document.getElementById(id).classList.remove('active');
@@ -1178,6 +1409,10 @@ window.logoTap = function() {
   S.logoTaps++;
   if (S.logoTaps >= 5) {
     S.logoTaps=0; S.pin=''; updateDots();
+    document.getElementById('admTeam').value = '';
+    document.getElementById('admList').innerHTML = '';
+    document.getElementById('admTeamWonRow').style.display = 'none';
+    document.getElementById('admSaveBtnRow').style.display = 'none';
     openModal('modal-pin');
   }
 };
@@ -1201,13 +1436,70 @@ function checkPin() {
   });
 }
 
-// ─── TOAST ───
+window.renderAdmin = function() {
+  const team = document.getElementById('admTeam').value;
+  const wonRow = document.getElementById('admTeamWonRow');
+  const saveBtnRow = document.getElementById('admSaveBtnRow');
+  if (!team) { document.getElementById('admList').innerHTML=''; wonRow.style.display='none'; saveBtnRow.style.display='none'; return; }
+  document.getElementById('admWonToggle').classList.remove('on');
+  wonRow.style.display='block'; saveBtnRow.style.display='block';
+  const list = PLAYERS.filter(p => p.team === team);
+  document.getElementById('admList').innerHTML = list.map(p => `
+    <div class="adm-pl">
+      <div class="adm-pl-name">${p.name} <span style="color:var(--text3);font-size:11px;font-weight:400">${p.team} · ${p.role}</span></div>
+      <div class="adm-inputs">
+        <div class="adm-iw"><label>Runs Scored</label><input type="number" id="ar_${p.id}" placeholder="0" min="0"></div>
+        <div class="adm-iw"><label>Team Total Runs</label><input type="number" id="atr_${p.id}" placeholder="0" min="0"></div>
+        <div class="adm-iw"><label>Wickets Taken</label><input type="number" id="aw_${p.id}" placeholder="0" min="0"></div>
+      </div>
+    </div>`).join('');
+};
+
+window.addMatchPoints = function() {
+  const team = document.getElementById('admTeam').value;
+  if (!team) { toast('Please select a team'); return; }
+  const teamWon = document.getElementById('admWonToggle').classList.contains('on');
+  const list = PLAYERS.filter(p => p.team === team);
+  const {db,ref,get,update} = window._db;
+  get(ref(db,'kicket/playerPoints')).then(snap => {
+    const current = snap.exists() ? snap.val() : {};
+    const updates = {};
+    list.forEach(p => {
+      const runs      = parseInt(document.getElementById('ar_'+p.id)?.value)  || 0;
+      const teamRuns  = parseInt(document.getElementById('atr_'+p.id)?.value) || 0;
+      const wickets   = parseInt(document.getElementById('aw_'+p.id)?.value)  || 0;
+      const didBat  = runs > 0 && teamRuns > 0;
+      const didBowl = wickets > 0;
+      if (!didBat && !didBowl && !teamWon) return;
+      const bat      = didBat  ? (runs / teamRuns) * 100 : 0;
+      const bowl     = didBowl ? (wickets / 10) * 100 : 0;
+      const winBonus = teamWon ? 20 : 0;
+      const matchPts = Math.max(0, bat) + Math.max(0, bowl) + winBonus;
+      updates[`kicket/playerPoints/${p.id}`] = (current[p.id] || 0) + matchPts;
+    });
+    if (Object.keys(updates).length === 0) { toast('No stats entered. Nothing to add.'); return; }
+    update(ref(db,'/'), updates).then(() => { toast('Match points added!'); closeModal('modal-admin'); });
+  });
+};
+
+window.confirmReset = function() {
+  if (confirm('Reset ALL cumulative points to zero? This cannot be undone.')) {
+    const {db,ref,remove} = window._db;
+    remove(ref(db,'kicket/playerPoints')).then(() => {
+      S.playerPoints = {};
+      toast('All points reset to zero!');
+      closeModal('modal-admin');
+    });
+  }
+};
+
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3500);
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 window.toast = toast;
+window.showToast = toast;
 </script>
 </body>
 </html>
